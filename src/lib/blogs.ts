@@ -9,6 +9,7 @@ export interface BlogPost {
   imageUrl?: string;
   content: string;
   publishedAt: string;
+  tags?: string[];
 }
 
 export const INITIAL_BLOGS: BlogPost[] = [
@@ -19,6 +20,7 @@ export const INITIAL_BLOGS: BlogPost[] = [
     category: "Physics",
     publishedAt: "2023-10-01",
     imageUrl: "/images/voltage-analogy.png",
+    tags: ["Physics", "Basics", "KTU", "Engineering", "Electrical Engineering"],
     content: `
 ## The Driving Force
 
@@ -80,6 +82,7 @@ You are a delivery driver (The Electron).
     category: "Physics",
     publishedAt: "2023-10-02",
     imageUrl: "/images/voltage-vs-current.png",
+    tags: ["Physics", "Basics", "KTU", "Engineering", "Electrical Engineering"],
     content: `
 ## The Gun and The Bullet
 
@@ -132,6 +135,7 @@ Combine them: **$I = V / R$**.
     category: "Physics",
     publishedAt: "2023-10-05",
     imageUrl: "/images/resistance-traffic.png",
+    tags: ["Physics", "Basics", "KTU", "Engineering", "Electrical Engineering"],
     content: `
 ## Fighting the Flow
 
@@ -186,6 +190,7 @@ If Resistance limits flow, isn't it bad?
     category: "Math",
     publishedAt: "2023-10-10",
     imageUrl: "/images/speed-conversion.png",
+    tags: ["Math", "Basics", "Physics"],
     content: `
 ## Why is this confusing?
 
@@ -243,6 +248,7 @@ $$ \\frac{72}{3.6} = 20 \\text{ m/s} $$
     category: "Chemistry",
     publishedAt: "2023-10-12",
     imageUrl: "/images/absorption-spectra.png",
+    tags: ["Chemistry", "Space", "Science", "Astronomy"],
     content: `
 ## The Puzzle
 If you shine pure white light through a prism, you get a perfect rainbow.
@@ -292,6 +298,7 @@ $$ E = hf $$
     category: "Engineering",
     publishedAt: "2023-10-15",
     imageUrl: "/images/ac-vs-dc.png",
+    tags: ["Engineering", "Electrical Engineering", "History", "KTU"],
     content: `
 ## The Battle
 In the 1880s, Thomas Edison (Team DC) and Nikola Tesla (Team AC) had a massive feud.
@@ -349,6 +356,7 @@ Because microchips need a steady "river" of electrons, not a shaking saw. That's
     category: "Engineering",
     publishedAt: "2023-10-18",
     imageUrl: "/images/emi-shielding.png",
+    tags: ["Engineering", "Electronics", "Physics"],
     content: `
 ## Ghost in the Machine
 Have you ever heard a buzzing sound in your speakers right before your phone rings?
@@ -397,6 +405,7 @@ This is why:
     category: "Engineering",
     publishedAt: "2023-10-20",
     imageUrl: "/images/transformer-coil.png",
+    tags: ["Engineering", "Electrical Engineering", "Machines", "KTU"],
     content: `
 ## The Magic Machine
 A transformer can turn 10,000 Volts into 10 Volts.
@@ -451,6 +460,7 @@ Transformers trade Voltage for Current using magnetism.
     category: "Physics",
     publishedAt: "2023-10-22",
     imageUrl: "/images/frequency-waves.png",
+    tags: ["Physics", "Waves", "Science"],
     content: `
 ## It's All Waves
 Sound is a wave. Light is a wave. Radio is a wave.
@@ -501,6 +511,7 @@ That's how fast the electric field wiggles to make the color Red!
     category: "Engineering",
     publishedAt: "2023-10-25",
     imageUrl: "/images/series-parallel.png",
+    tags: ["Engineering", "Basics", "Electrical Engineering"],
     content: `
 ## The Holiday Light Disaster
 In the old days, if one Christmas light broke, the whole string went dark. You had to test every single bulb to find the bad one.
@@ -539,6 +550,289 @@ $$ \\frac{1}{R_{total}} = \\frac{1}{R_1} + \\frac{1}{R_2} $$
 ### Summary
 *   **House Wiring**: Always Parallel.
 *   **Flashlights**: Batteries often in Series.
+    `,
+  },
+  {
+    slug: "quantum-entanglement",
+    title: "What Is Quantum Entanglement? Spooky Action",
+    description: "Einstein called it 'spooky action at a distance'. How can two particles communicate instantly across the universe?",
+    category: "Physics",
+    publishedAt: "2023-11-01",
+    imageUrl: "/images/entanglement.png",
+    tags: ["Physics", "Quantum Mechanics", "Sci-Fi", "Science"],
+    content: `
+## Faster Than Light?
+
+Imagine you have two magical coins. You flip them at the exact same moment.
+If Coin A lands **Heads**, Coin B *instantly* lands **Tails**. Always.
+Even if Coin A is in New York and Coin B is on Mars.
+
+This is **Quantum Entanglement**.
+
+### The Gloves Analogy
+Einstein hated this idea. He thought it was just hidden information.
+Like a pair of gloves:
+1.  Put a **Left Glove** in one box.
+2.  Put a **Right Glove** in another box.
+3.  Send them to opposite sides of the world.
+4.  If you open Box 1 and see "Left", you *instantly* know Box 2 is "Right".
+
+> **The Twist:** In Quantum Mechanics, the gloves **don't have a shape** until you open the box. They are a blurry mix of Left AND Right. The moment you look at one, it *decides* to be Left, and the other one *instantly decides* to be Right to match it.
+
+![Entanglement Diagram](/images/entanglement.png)
+
+### Why is this weird?
+Classical physics says information travels at the speed of light.
+If the particles are light-years apart, how does the second one know *instantly* what the first one did?
+Quantum mechanics says: **They aren't two separate objects anymore.** They are one single system stretched across space.
+
+### Common Misconceptions
+
+> **Myth:** "We can use entanglement to send messages faster than light."
+>
+> **Fact:** No. You can't control *which* answer you get (Heads or Tails). It's random. You only know that the other person got the opposite. Randomness helps with encryption (Quantum Cryptography), not communication.
+
+### Real-World Connection
+*   **Quantum Computers**: Use entanglement to perform massive calculations in parallel.
+*   **Cryptography**: Unbreakable codes.
+
+### Q&A
+1.  **Can we teleport humans?** not yet. We can teleport the "state" of an atom, but not the atom itself.
+2.  **Does distance matter?** No. It works across galaxies.
+    `,
+  },
+  {
+    slug: "time-dilation-gravity",
+    title: "Why Time Slows Down Near Black Holes",
+    description: "Gravity doesn't just pull objects. It pulls Time itself.",
+    category: "Physics",
+    publishedAt: "2023-11-05",
+    imageUrl: "/images/time-dilation.png",
+    tags: ["Physics", "Relativity", "Space", "Astronomy"],
+    content: `
+## The Interstellar Scenario
+
+In the movie *Interstellar*, 1 hour on the water planet = 7 years on Earth.
+This isn't just movie magic. It's **General Relativity**.
+
+### Gravity is Geometry
+Imagine Space and Time are a flexible fabric (like a trampoline).
+1.  Heavy objects (like the Sun) stretch the fabric downward.
+2.  This stretching is **Gravity**.
+
+But they don't just stretch *Space*. They stretch *Time*.
+
+### The GPS Proof
+You use this every day.
+GPS satellites fly 20,000 km up, where Earth's gravity is weaker.
+*   **On Earth (Strong Gravity):** Time moves Slower.
+*   **In Space (Weak Gravity):** Time moves Faster.
+
+If engineers didn't program the satellite clocks to "tick" slower to match us, your Google Maps would be wrong by **10 kilometers every day**.
+
+![Spacetime Curvature](/images/time-dilation.png)
+
+### Why? The Light Clock
+Einstein realized the Speed of Light ($c$) is constant.
+If gravity curves space, light has to travel a longer, curved path.
+For light to arrive at the same speed while traveling a longer distance, **Time itself must slow down** to compensate.
+
+$$ \\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} $$
+
+If Distance goes UP (curved path), Time must go UP (slow down) to keep Speed constant.
+
+### Common Misconceptions
+
+> **Myth:** "Time stops inside a Black Hole."
+>
+> **Fact:** To an outside observer, it looks like it stops. To the person falling in, time feels normal... until they get crushed.
+
+### Q&A
+1.  **Do my feet age slower than my head?** Yes! Gravity is stronger at your feet. But the difference is tiny (nanoseconds per lifetime).
+2.  **Is time travel possible?** Forward? Yes, go near a black hole. Backward? Probably not.
+    `,
+  },
+  {
+    slug: "why-sky-is-blue",
+    title: "Why Is the Sky Blue? (It's Not the Ocean)",
+    description: "The physics of sunlight, atmosphere, and why sunsets are red.",
+    category: "Science",
+    publishedAt: "2023-11-08",
+    imageUrl: "/images/blue-sky.png",
+    tags: ["Science", "Physics", "Nature", "Basics"],
+    content: `
+## The Color of Air
+
+Ask a child why the sky is blue, and they might say "It reflects the ocean."
+But the sky is blue even in the middle of a continent!
+
+### The Prism in the Sky
+Sunlight looks white, but it's actually a rainbow of all colors mixed together.
+*   **Red**: Long, lazy waves.
+*   **Blue**: Short, energetic waves.
+
+When sunlight hits the atmosphere, it crashes into Nitrogen and Oxygen molecules.
+
+### Rayleigh Scattering
+The rule is simple: **Small obstacles scatter small waves.**
+1.  **Red waves** are big. They step over the air molecules like a giant stepping over rocks. They go straight through.
+2.  **Blue waves** are tiny. They crash into the molecules and bounce off in every direction.
+
+![Rayleigh Scattering](/images/blue-sky.png)
+
+When you look up, you aren't looking at the sun. You are looking at the *scattered* light bouncing around the air. Since Blue is the most scattered, the sky glows Blue.
+
+### What about Sunsets?
+At sunset, the sun is low. Light travels through **much more air** to reach you.
+By the time the light arrives:
+*   All the Blue has been scattered away completely.
+*   Only the **Red and Orange** (which go straight) are left to hit your eyes.
+
+### Common Misconceptions
+
+> **Myth:** "Violet scatters more than Blue, so why isn't the sky Violet?"
+>
+> **Fact:** Good question! Violet *does* scatter more. BUT: 1) The sun emits less violet light to begin with. 2) Human eyes are much more sensitive to Blue than Violet. Our brain ignores the weak violet signal.
+
+### Q&A
+1.  **What color is the sky on Mars?** Red/Pink, because Martian dust scatters red light differently.
+2.  **Why are clouds white?** Water droplets are huge compared to air molecules. They scatter ALL colors equally. $Red + Blue + Green = White$.
+    `,
+  },
+  {
+    slug: "derivative-intuition",
+    title: "What Is a Derivative? The Speedometer Logic",
+    description: "Calculus isn't about memorizing rules. It's about measuring change.",
+    category: "Math",
+    publishedAt: "2023-11-12",
+    imageUrl: "/images/derivative-slope.png",
+    tags: ["Math", "Calculus", "Intuition", "Basics"],
+    content: `
+## The Impossible Snapshot
+
+Imagine you take a photo of a moving car.
+In the photo, is the car moving?
+No. It's frozen. It has a position, but no speed.
+
+So how do we measure speed (Change) at a specific instant?
+**That is the Derivative.**
+
+### The Slope
+In algebra, you learned Slope = Rise / Run.
+$$ \\text{Slope} = \\frac{\\Delta y}{\\Delta x} $$
+
+This works for straight lines. But real life is curved.
+A Derivative is just finding the **Slope** of a curved line at a single tiny point.
+
+### The Zoom In
+Imagine a roller coaster track (a curve).
+If you zoom in $1000\\times$ on a specific loop-de-loop, the track looks flat.
+The **Derivative** is just the steepness of that tiny, zoomed-in section.
+
+![Derivative Tangent Line](/images/derivative-slope.png)
+
+### Why do we care?
+*   Function: **Position** (Where am I?)
+*   Derivative: **Velocity** (How fast am I changing position?)
+*   Derivative of Derivative: **Acceleration** (How fast am I changing speed?)
+
+Calculus lets us predict the future by understanding how things change *right now*.
+
+### Common Misconceptions
+
+> **Myth:** "Need to be a genius to do Calculus."
+>
+> **Fact:** You do calculus every time you drive. You see a red light (Position), you hit the brake (Acceleration), to reduce your speed (Velocity) to zero. You intuitively understand rates of change.
+
+### Q&A
+1.  **What is an Integral?** The opposite. A derivative cuts a shape into slices to see the slope. An Integral glues slices together to find the Area.
+    `,
+  },
+  {
+    slug: "why-ice-floats",
+    title: "Why Ice Floats? The Water Weirdness",
+    description: "Almost every solid sinks in its own liquid. Why is water different?",
+    category: "Chemistry",
+    publishedAt: "2023-11-15",
+    imageUrl: "/images/ice-lattice.png",
+    tags: ["Chemistry", "Water", "Nature", "Basics"],
+    content: `
+## The Exception to the Rule
+
+If you throw a solid rock into molten rock (lava), it sinks.
+If you throw a piece of solid iron into molten iron, it sinks.
+Solids are usually **denser** (packed tighter) than liquids.
+
+But throw solid water (Ice) into liquid water... and it **floats**.
+If it didn't, life on Earth would die. Oceans would freeze from the bottom up!
+
+### The Hydrogen Bond Cage
+Water molecules ($H_2O$) are like magnets. One side is positive, the other negative. They stick together.
+1.  **In Liquid:** They are energetic and jumbled up. They slide past each other closely.
+2.  **In Ice (Solid):** They lock into a rigid **Hexagonal Crystal**.
+
+To make this hexagon shape, the molecules have to push each other apart slightly.
+It requires **Empty Space** in the middle of the ring.
+
+![Ice Lattice Structure](/images/ice-lattice.png)
+
+Because of this specific crystal shape, Ice takes up **9% more space** (Volume) than liquid water.
+Same mass + More volume = **Lower Density**.
+
+### Common Misconceptions
+
+> **Myth:** "Ice floats because of air bubbles trapped inside."
+>
+> **Fact:** No. Even perfectly clear, bubble-free ice floats. It is the molecular structure itself that expands.
+
+### Real-World Connection
+*   **Potholes**: Water seeps into road cracks, freezes, expands, and breaks the asphalt.
+*   **Frozen Pipes**: Expands and bursts metal pipes.
+
+### Q&A
+1.  **At what temperature is water heaviest?** 4°C. Just before it starts expanding to freeze.
+    `,
+  },
+  {
+    slug: "double-slit-experiment",
+    title: "The Double Slit Experiment: Reality Is Weird",
+    description: "The most famous experiment in physics. Are we particles or waves?",
+    category: "Physics",
+    publishedAt: "2023-11-20",
+    imageUrl: "/images/double-slit.png",
+    tags: ["Physics", "Quantum Mechanics", "History", "Mind-Blowing"],
+    content: `
+## Marble vs. Wave
+
+If you shoot marbles at a wall with two slits, you get two piles of marbles on the back wall.
+If you send water waves through two slits, the waves ripple and overlap, creating an **Interference Pattern** (many stripes).
+
+### The Electron Mystery
+Scientists fired electrons (tiny particles) at two slits.
+They expected two piles (like marbles).
+They got... **Interference Stripes (like waves)**.
+
+Wait. How can a single particle ripple like a wave? It seems to go through **both slits at the same time**.
+
+### The Observer Effect
+"Okay," scientists said. "Let's put a camera to watch which slit it goes through."
+They turned the camera on.
+Suddenly, the electrons stopped acting like waves. They started acting like marbles again! Two piles.
+
+**The act of measuring collapsed the reality.**
+When you don't look, it's a wave of potential.
+When you look, it forces it to choose a path.
+
+![Double Slit Diagram](/images/double-slit.png)
+
+### Common Misconceptions
+
+> **Myth:** "Consciousness causes the collapse. The electron knows I'm watching."
+>
+> **Fact:** No. "Observing" in physics means interacting. To "see" an electron, you must bounce a photon off it. That photon hits the electron and disturbs it, destroying the delicate wave pattern. It's clumsy interaction, not magic mind power.
+
+### Q&A
+1.  **Does this happen with big objects?** Technically yes, but the wavelength is so tiny it's unnoticeable. You aren't going to wave-form through a door.
     `,
   },
 ];

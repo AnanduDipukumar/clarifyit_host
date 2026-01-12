@@ -2,6 +2,7 @@ import { INITIAL_BLOGS } from "@/lib/blogs";
 import { notFound } from "next/navigation";
 import BlogPostClient from "@/components/BlogPostClient";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 type Props = {
     params: Promise<{ slug: string }>;
@@ -38,7 +39,11 @@ export default async function BlogPostPage({ params }: Props) {
         notFound();
     }
 
-    return <BlogPostClient blog={blog} />;
+    return (
+        <Suspense fallback={<div className="min-h-screen animate-pulse bg-muted rounded-lg m-4" />}>
+            <BlogPostClient blog={blog} />
+        </Suspense>
+    );
 }
 
 // Generate static params for all blogs at build time

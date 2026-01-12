@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Bell, Search } from "lucide-react";
+import { Menu, Bell, Search, Clock, PenTool } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -29,6 +29,13 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
                         <span className="text-sm text-muted-foreground hidden md:inline-block">Explained Simply</span>
                     </div>
                     <nav className="flex items-center space-x-2">
+                        <Link href="/history" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md" aria-label="History" title="Browsing History">
+                            <Clock className="h-5 w-5" />
+                        </Link>
+                        <Link href="/submit" className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-full transition-colors" title="Submit Article">
+                            <PenTool className="h-4 w-4" />
+                            <span>Contribute</span>
+                        </Link>
                         <ThemeToggle />
                         <button className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md" aria-label="Notifications">
                             <Bell className="h-5 w-5" />

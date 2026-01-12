@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Home, BookOpen, Info, Mail } from "lucide-react";
+import { X, Home, BookOpen, Info, Mail, Heart, PenTool } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -42,6 +42,22 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     >
                         <Home className="h-4 w-4" />
                         Home
+                    </Link>
+                    <Link
+                        href="/favorites"
+                        className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium"
+                        onClick={onClose}
+                    >
+                        <Heart className="h-4 w-4" />
+                        Favorites
+                    </Link>
+                    <Link
+                        href="/submit"
+                        className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium"
+                        onClick={onClose}
+                    >
+                        <PenTool className="h-4 w-4" />
+                        Contribute
                     </Link>
                     <Link
                         href="/about"

@@ -1,90 +1,76 @@
-# ClarifyIt.in
+# ClarifyIt.in - Handover Documentation
 
-> **Explained Simply.** A beginner-friendly educational platform explaining complex scientific concepts with analogies, diagrams, and "reinvented" math.
+> **Status**: Feature Complete (Demo/Local Mode)
+> **Goal**: A beginner-friendly educational blog simplifying science and engineering.
 
-## 🎯 Objective
-To create a high-quality educational blog that:
-1.  **Simplifies Complexity**: Uses real-world analogies (Water for Voltage, Traffic for Resistance) to explain abstract physics/engineering topics.
-2.  **Visualizes Concepts**: Uses custom diagrams for every major concept.
-3.  **Teaches "Why"**: Derives formulas from scratch to build intuition rather than rote memorization.
-4.  **Debunks Myths**: Directly addresses common misconceptions.
+## 🌟 Overview
+ClarifyIt is a Next.js 16 web application designed to teach complex topics using analogies, diagrams, and intuition. It is built to be fast, responsive, and interactive.
 
-## 🛠️ How We Achieved It (Architecture)
-The project is built as a highly optimized, static-first web application:
+## ✨ Key Features Implemented
+1.  **Content Engine**:
+    *   **Markdown Support**: Blogs are written in Markdown with support for Graphs, LaTeX Math (`$$ E=mc^2 $$`), and Syntax Highlighting.
+    *   **Tags & Categories**: Deep categorization system.
+    *   **Search**: Real-time fuzzy search by Title, Description, and Tags.
+2.  **User Experience (UX)**:
+    *   **Smart Filtering**: Filter by "AND/OR" logic, Case-insensitive matching, and text matching modes (substring, prefix, etc.).
+    *   **Persistence**: Filter settings, sort preferences, and active tags are saved in `localStorage`.
+    *   **Contextual Navigation**: "Next" and "Previous" buttons on blog posts respect the user's current search filters.
+3.  **Personalization (Local Storage)**:
+    *   **Favorites**: Users can bookmark blogs (Click Heart icon). Saved to `localStorage`.
+    *   **History**: Tracks visited pages. Viewable at `/history`.
+    *   **View Counts**: Simulated view incrementing (stored locally).
+4.  **Community**:
+    *   **Submission System**: A "Contribute" page (`/submit`) allowing users to draft blogs. Currently mocks a submission by saving to `localStorage`.
 
-*   **Framework**: [Next.js 16 (App Router)](https://nextjs.org/) for server-side rendering and SEO.
-*   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with a custom design system (Note boxes, Math cards).
-*   **Content**: Markdown-based CMS. Blogs are written in TypeScript/Markdown with:
-    *   **Math Support**: `KaTeX` for beautiful equation rendering (`$$ E=mc^2 $$`).
-    *   **Typography**: `@tailwindcss/typography` for clean reading experience.
-*   **Theming**: `next-themes` for robust Light/Dark mode toggling.
-*   **Interactivity**:
-    *   **Search & Filter**: Real-time filtering on the client side.
-    *   **Engagement**: Like buttons and View counters (currently running in Demo Mode using LocalStorage).
+## 📂 Project Structure (For the Next AI)
 
-## ⏳ What is Pending?
-*   **Real Database Connection**: The app currently uses a "Mock Database" (saving data to your browser's LocalStorage) so you can test it immediately. To persist data across users, you need to connect it to Firebase (see instructions below).
-*   **Contact/About Pages**: Placeholder links exist, but dedicated pages can be added.
+### `src/app`
+*   `page.tsx`: **Home Page**. Handles the main search grid, filter logic state, and maps `BlogCard` components.
+*   `blog/[slug]/page.tsx`: **Blog Post**. Dynamic route. Uses `ReactMarkdown` to render content. Includes `BlogPostClient` for interactive features (Views, History, Favorites).
+*   `favorites/page.tsx`: Displays saved blogs.
+*   `history/page.tsx`: Displays visited blogs.
+*   `submit/page.tsx`: Form for user submissions.
 
----
+### `src/components`
+*   `SearchSection.tsx`: The complex search bar. Contains the "Advanced Filters" toggle, Tag inputs, and Sort controls. Handles logic for `matchMode` and `matchLogic`.
+*   `BlogCard.tsx`: The grid item. Handles "Share" and "Favorite" actions internally to prevent click conflicts.
+*   `Sidebar.tsx`: Mobile and Desktop navigation.
+*   `OnboardingGuide.tsx`: The "Welcome" modal.
 
-## 🚀 How to Launch & Develop (From Another Laptop)
+### `src/lib` (CRITICAL)
+*   **`blogs.ts`**: **THE CONTENT SOURCE**. This file exports `INITIAL_BLOGS`, a hardcoded array of all blog posts. **To add new blogs, append objects here.**
+*   `db.ts`: A mock database layer. It checks for `localStorage` data first. If missing, it falls back to defaults. Designed to be easily swapped for Firebase.
+*   `filter.ts`: Centralized logic for filtering blogs.
+*   `favorites.ts`, `history.ts`, `submissions.ts`: Utilities handling specific `localStorage` keys (`clarifyit_favorites`, etc.).
 
-### Prerequisites
-*   [Node.js](https://nodejs.org/) (Version 18 or higher) installed.
-*   [Git](https://git-scm.com/) installed.
+## 🤖 Instructions for the Next AI
+**Welcome, Colleague!** Here is the state of the project:
 
-### Steps
-1.  **Clone the Repository**
-    ```bash
-    git clone <your-private-repo-url>
-    cd Clarifyit.in
-    ```
+1.  **Adding Content**:
+    *   Do NOT create new MDX files. We are using a simpler approach.
+    *   Open `src/lib/blogs.ts`.
+    *   Add a new object to the `INITIAL_BLOGS` array.
+    *   Follow the existing schema: `slug`, `title`, `content` (Markdown string), `tags`, `category`.
+    *   Images go in `public/images/` and are referenced as `/images/filename.png`.
 
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    # This installs Next.js, React, Tailwind, and all other required tools.
-    ```
+2.  **Backend Integration**:
+    *   Currently, `src/lib/db.ts` acts as a facade.
+    *   To make this "Real", you need to replace the `localStorage` calls in `db.ts`, `favorites.ts`, etc., with actual API calls (Firebase/Supabase).
+    *   The UI components (`LikeButton`, `ViewCounter`) are already async-ready.
 
-3.  **Run Development Server**
-    ```bash
-    npm run dev
-    ```
-    Open [http://localhost:3000](http://localhost:3000) in your browser.
+3.  **Submission Workflow**:
+    *   Currently, submissions in `/submit` just vanish into `localStorage`.
+    *   **Next Step**: Create an "Admin Dashboard" page that reads these pending submissions and allows moving them into the real database.
 
-4.  **Adding New Content**
-    *   See [`docs/blog_creation_guide.md`](docs/blog_creation_guide.md) for a detailed template and style guide.
-    *   Simply add new blog objects to `src/lib/blogs.ts` and add images to `public/images/`.
+4.  **Styling**:
+    *   We use `Tailwind CSS`.
+    *   Global styles are in `src/app/globals.css`.
+    *   Dark mode is handled by `next-themes` (class strategy).
 
----
+## 🚀 Running Locally
+```bash
+npm install
+npm run dev
+```
 
-## 📦 Deployment Instructions
-
-The easiest way to deploy this Next.js app is **Vercel**.
-
-1.  **Push to GitHub**: Make sure this code is in your GitHub repository.
-2.  **Go to Vercel**: Sign up/Log in at [vercel.com](https://vercel.com).
-3.  **Add New Project**: Click "Add New..." -> "Project".
-4.  **Import Repository**: Select your `Clarifyit.in` repo.
-5.  **Deploy**: Keep all default settings and click **Deploy**.
-
-Vercel will automatically detect Next.js, build the site, and host it on a global CDN.
-
----
-
-## 🔌 Connecting Real Firebase (Optional)
-To move from "Demo Mode" to a real shared database:
-
-1.  Create a project at [Firebase Console](https://console.firebase.google.com/).
-2.  Add a Web App and copy the configuration keys.
-3.  Create a `.env.local` file in the root directory:
-    ```env
-    NEXT_PUBLIC_FIREBASE_API_KEY=xxx
-    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=xxx
-    NEXT_PUBLIC_FIREBASE_PROJECT_ID=xxx
-    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=xxx
-    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=xxx
-    NEXT_PUBLIC_FIREBASE_APP_ID=xxx
-    ```
-4.  Restart the dev server (`npm run dev`). The app will auto-detect the keys and switch to Firebase.
+Good luck! The foundation is solid.
