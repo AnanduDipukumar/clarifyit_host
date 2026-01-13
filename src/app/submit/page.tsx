@@ -36,7 +36,7 @@ export default function SubmitPage() {
         // Simulate network delay
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        const success = submitBlog({
+        const success = await submitBlog({
             ...formData,
             tags
         });
