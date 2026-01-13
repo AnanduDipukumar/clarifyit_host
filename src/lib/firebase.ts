@@ -14,15 +14,17 @@ const firebaseConfig = {
 };
 
 // Singleton pattern to avoid re-initialization
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
+let app: any = null;
+let db: any = null;
 
-// Analytics is only supported in browser environment
-// let analytics;
-// if (typeof window !== "undefined") {
-//   isSupported().then(supported => {
-//       if (supported) analytics = getAnalytics(app);
-//   });
-// }
-
+if (firebaseConfig.apiKey) {
+    try {
+        app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+        db = getFirestore(app);
+    } catch (e) {
+        console.warn("Firebase Init Failed", e);
+    }
+} else {
+    console.warn("Firebase Env Vars missing - App running in Mock Mode");
+}
 export { app, db };
