@@ -5,9 +5,14 @@ import { useEffect, useState } from "react";
 import { getBlogStats, BlogPostStats } from "@/lib/db";
 import { addToFavorites, removeFromFavorites, isFavorite } from "@/lib/favorites";
 
+
+import PlaylistSelector from "./PlaylistSelector";
+import { ListPlus } from "lucide-react";
+
 export default function BlogCard({ blog, queryString }: { blog: BlogPost; queryString?: string }) {
     const [stats, setStats] = useState<BlogPostStats>({ views: 0, likes: 0 });
     const [isFav, setIsFav] = useState(false);
+    const [showPlaylistSelector, setShowPlaylistSelector] = useState(false);
 
     useEffect(() => {
         getBlogStats(blog.slug).then(setStats);
@@ -44,8 +49,22 @@ export default function BlogCard({ blog, queryString }: { blog: BlogPost; queryS
         }
     };
 
+    const togglePlaylistSelector = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setShowPlaylistSelector(!showPlaylistSelector);
+    };
+
     return (
         <div className="group relative flex flex-col rounded-xl border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+            {showPlaylistSelector && (
+                <div className="absolute inset-0 z-50 p-2">
+                    <div className="bg-white/95 dark:bg-neutral-900/95 backdrop-blur-sm h-full w-full rounded-lg border shadow-lg overflow-hidden relative">
+                        <PlaylistSelector blogSlug={blog.slug} onClose={() => setShowPlaylistSelector(false)} />
+                    </div>
+                </div>
+            )}
+
             <div className="p-6 flex flex-col items-start gap-4 h-full">
                 {/* Header Row: Category + Actions */}
                 <div className="flex w-full items-center justify-between">
@@ -53,6 +72,13 @@ export default function BlogCard({ blog, queryString }: { blog: BlogPost; queryS
                         {blog.category}
                     </span>
                     <div className="flex gap-2 relative z-20">
+                        <button
+                            onClick={togglePlaylistSelector}
+                            className="p-1.5 text-muted-foreground hover:bg-muted rounded-full transition-colors"
+                            title="Add to Custom Course"
+                        >
+                            <ListPlus className="h-4 w-4" />
+                        </button>
                         <button
                             onClick={handleShare}
                             className="p-1.5 text-muted-foreground hover:bg-muted rounded-full transition-colors"

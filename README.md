@@ -1,73 +1,110 @@
 # ClarifyIt.in - Handover Documentation
 
-> **Status**: Feature Complete (Demo/Local Mode)
+> **Status**: Deployment Ready (V1.0)
 > **Goal**: A beginner-friendly educational blog simplifying science and engineering.
 
 ## 🌟 Overview
-ClarifyIt is a Next.js 16 web application designed to teach complex topics using analogies, diagrams, and intuition. It is built to be fast, responsive, and interactive.
+ClarifyIt is a Next.js 16 web application designed to teach complex topics using analogies, diagrams, and intuition. It is built to be fast, responsive, and interactive. 
+
+It uses a **Hybrid Architecture**:
+*   **Personal Data**: Stored in User's Browser (LocalStorage).
+*   **Global Data** (Likes, Views, Submissions): Stored in **Firebase Firestore** (Public Write).
+
+## 🚀 Deployment Guide (Vercel)
+
+This project is optimized for deployment on **Vercel**.
+
+### 1. Prerequisites
+You need a **Firebase Project** for the backend features to work.
+1.  Go to [Firebase Console](https://console.firebase.google.com/).
+2.  Create a new project (e.g., `clarifyit-prod`).
+3.  Enable **Firestore Database**.
+4.  Go to **Project Settings** -> **General** -> **Your apps** -> **Add Web App**.
+5.  Copy the configuration values.
+
+### 2. Environment Variables
+Add the following variables to your Vercel Project Settings:
+
+```env
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### 3. Firebase Security Rules (Anonymous Access)
+Since we don't force users to create accounts, we must allow "Public Write" access for specific actions.
+Go to **Firestore Database** -> **Rules** and paste this:
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow anyone to read/write global stats (Likes/Views)
+    match /posts/{slug} {
+      allow read, write: if true;
+    }
+    
+    // Allow anyone to submit a blog (Admin review needed)
+    match /submissions/{id} {
+        allow create: if true; 
+        allow read: if false; // Only Admin can read (via Console)
+    }
+  }
+}
+```
 
 ## ✨ Key Features Implemented
 1.  **Content Engine**:
+    *   **Courses**: Hierarchical learning paths (`/courses` -> Modules -> Topics).
+    *   **Custom Playlists**: Users can drag-and-drop blogs into their own "Custom Courses".
     *   **Markdown Support**: Blogs are written in Markdown with support for Graphs, LaTeX Math (`$$ E=mc^2 $$`), and Syntax Highlighting.
-    *   **Tags & Categories**: Deep categorization system.
-    *   **Search**: Real-time fuzzy search by Title, Description, and Tags.
 2.  **User Experience (UX)**:
-    *   **Smart Filtering**: Filter by "AND/OR" logic, Case-insensitive matching, and text matching modes (substring, prefix, etc.).
-    *   **Persistence**: Filter settings, sort preferences, and active tags are saved in `localStorage`.
-    *   **Contextual Navigation**: "Next" and "Previous" buttons on blog posts respect the user's current search filters.
-3.  **Personalization (Local Storage)**:
-    *   **Favorites**: Users can bookmark blogs (Click Heart icon). Saved to `localStorage`.
-    *   **History**: Tracks visited pages. Viewable at `/history`.
-    *   **View Counts**: Simulated view incrementing (stored locally).
-4.  **Community**:
-    *   **Submission System**: A "Contribute" page (`/submit`) allowing users to draft blogs. Currently mocks a submission by saving to `localStorage`.
+    *   **Smart Filtering**: Filter by "AND/OR" logic, Case-insensitive matching.
+    *   **Persistence**: Filter settings and playlists saved in `localStorage`.
+    *   **Sharing**: Share Playlists via URL (No account needed).
+3.  **Community**:
+    *   **Submission System**: Users can draft blogs (`/submit`). These are sent to Firestore.
 
 ## 📂 Project Structure (For the Next AI)
 
 ### `src/app`
-*   `page.tsx`: **Home Page**. Handles the main search grid, filter logic state, and maps `BlogCard` components.
-*   `blog/[slug]/page.tsx`: **Blog Post**. Dynamic route. Uses `ReactMarkdown` to render content. Includes `BlogPostClient` for interactive features (Views, History, Favorites).
-*   `favorites/page.tsx`: Displays saved blogs.
-*   `history/page.tsx`: Displays visited blogs.
-*   `submit/page.tsx`: Form for user submissions.
-
-### `src/components`
-*   `SearchSection.tsx`: The complex search bar. Contains the "Advanced Filters" toggle, Tag inputs, and Sort controls. Handles logic for `matchMode` and `matchLogic`.
-*   `BlogCard.tsx`: The grid item. Handles "Share" and "Favorite" actions internally to prevent click conflicts.
-*   `Sidebar.tsx`: Mobile and Desktop navigation.
-*   `OnboardingGuide.tsx`: The "Welcome" modal.
+*   `page.tsx`: **Home Page**.
+*   `courses/`: **Course Logic**.
+*   `playlists/`: **Custom Playlist Logic**.
+*   `blog/[slug]/page.tsx`: **Blog Post**.
 
 ### `src/lib` (CRITICAL)
-*   **`blogs.ts`**: **THE CONTENT SOURCE**. This file exports `INITIAL_BLOGS`, a hardcoded array of all blog posts. **To add new blogs, append objects here.**
-*   `db.ts`: A mock database layer. It checks for `localStorage` data first. If missing, it falls back to defaults. Designed to be easily swapped for Firebase.
-*   `filter.ts`: Centralized logic for filtering blogs.
-*   `favorites.ts`, `history.ts`, `submissions.ts`: Utilities handling specific `localStorage` keys (`clarifyit_favorites`, etc.).
+*   **`blogs.ts`**: **THE CONTENT SOURCE**. Exporting `INITIAL_BLOGS`.
+*   **`courses.ts`**: Structure for University Courses.
+*   **`playlists.ts`**: Logic for local playlists & URL sharing.
+*   **`firebase.ts`**: Config.
+*   **`db.ts`**: Unified DB layer. Checks if Firebase is active; else falls back to Mock.
+*   **`submissions.ts`**: Handles blog submissions (Local vs Cloud).
 
 ## 🤖 Instructions for the Next AI
 **Welcome, Colleague!** Here is the state of the project:
 
 1.  **Adding Content**:
-    *   Do NOT create new MDX files. We are using a simpler approach.
-    *   Open `src/lib/blogs.ts`.
-    *   Add a new object to the `INITIAL_BLOGS` array.
-    *   Follow the existing schema: `slug`, `title`, `content` (Markdown string), `tags`, `category`.
-    *   Images go in `public/images/` and are referenced as `/images/filename.png`.
+    *   Add objects to `INITIAL_BLOGS` in `src/lib/blogs.ts`.
+    *   Images go in `public/images/`.
 
 2.  **Backend Integration**:
-    *   Currently, `src/lib/db.ts` acts as a facade.
-    *   To make this "Real", you need to replace the `localStorage` calls in `db.ts`, `favorites.ts`, etc., with actual API calls (Firebase/Supabase).
-    *   The UI components (`LikeButton`, `ViewCounter`) are already async-ready.
+    *   The project is now **Firebase Ready**.
+    *   `src/lib/db.ts` automatically detects if env variables are present.
 
 3.  **Submission Workflow**:
-    *   Currently, submissions in `/submit` just vanish into `localStorage`.
-    *   **Next Step**: Create an "Admin Dashboard" page that reads these pending submissions and allows moving them into the real database.
+    *   Submissions now go to the `submissions` collection in Firestore.
+    *   **Next Step**: Create an "Admin Dashboard" (protected route) to verify these.
 
 4.  **Styling**:
-    *   We use `Tailwind CSS`.
-    *   Global styles are in `src/app/globals.css`.
-    *   Dark mode is handled by `next-themes` (class strategy).
+    *   Standard `Tailwind CSS`.
 
-## 🚀 Running Locally
+## 🛠️ Running Locally
 ```bash
 npm install
 npm run dev

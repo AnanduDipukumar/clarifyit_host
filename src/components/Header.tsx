@@ -32,6 +32,9 @@ export default function Header({ onToggleSidebar }: HeaderProps) {
                         <Link href="/history" className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md" aria-label="History" title="Browsing History">
                             <Clock className="h-5 w-5" />
                         </Link>
+                        <Link href="/courses" className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-neutral-600 hover:text-primary transition-colors" title="Structured Courses">
+                            <span>Courses</span>
+                        </Link>
                         <Link href="/submit" className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-full transition-colors" title="Submit Article">
                             <PenTool className="h-4 w-4" />
                             <span>Contribute</span>

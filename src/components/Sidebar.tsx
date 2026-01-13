@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Home, BookOpen, Info, Mail, Heart, PenTool } from "lucide-react";
+import { X, Home, BookOpen, Info, Mail, Heart, PenTool, ListMusic } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -58,6 +58,23 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     >
                         <PenTool className="h-4 w-4" />
                         Contribute
+                    </Link>
+                    <Link
+                        href="/courses"
+                        className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium"
+                        onClick={onClose}
+                    >
+                        <BookOpen className="h-4 w-4" />
+                        Courses
+                    </Link>
+                    <Link
+                        href="/playlists"
+                        className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium"
+                        onClick={onClose}
+                    >
+                        {/* Using a different icon for differentiation */}
+                        <ListMusic className="h-4 w-4" />
+                        Custom Courses
                     </Link>
                     <Link
                         href="/about"

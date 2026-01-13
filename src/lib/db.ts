@@ -64,7 +64,8 @@ export async function getBlogStats(slug: string): Promise<BlogPostStats> {
                 return snap.data() as BlogPostStats;
             } else {
                 // Initialize if not exists
-                await setDoc(ref, { views: 0, likes: 0 });
+                // We use setDoc with merge to avoid overwriting if created concurrently
+                await setDoc(ref, { views: 0, likes: 0 }, { merge: true });
                 return { views: 0, likes: 0 };
             }
         } catch (e) {
@@ -79,10 +80,11 @@ export async function incrementView(slug: string): Promise<void> {
     if (db) {
         try {
             const ref = doc(db, "posts", slug);
-            await updateDoc(ref, { views: increment(1) });
+            // We use setDoc with merge to ensure document exists before updating
+            await setDoc(ref, { views: increment(1) }, { merge: true });
             return;
         } catch (e) {
-            // Ignore error
+            console.warn("Firebase inc view failed", e);
         }
     }
     const stats = getMockStats(slug);
@@ -94,11 +96,10 @@ export async function incrementLike(slug: string): Promise<number> {
     if (db) {
         try {
             const ref = doc(db, "posts", slug);
-            await updateDoc(ref, { likes: increment(1) });
-            // Return new count? No easy way without refetch, but we can assume +1
+            await setDoc(ref, { likes: increment(1) }, { merge: true });
             return -1; // optimized update in UI
         } catch (e) {
-            // Ignore
+            console.warn("Firebase inc like failed", e);
         }
     }
     const stats = getMockStats(slug);
