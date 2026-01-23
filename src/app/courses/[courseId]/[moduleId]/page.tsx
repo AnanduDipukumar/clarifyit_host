@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
 import { getModule, getCourse } from "@/lib/courses";
-import { INITIAL_BLOGS } from "@/lib/blogs";
+import { allBlogs } from "@/lib/blogs";
 import BlogCard from "@/components/BlogCard";
 import { ArrowLeft, BookOpen, Search } from "lucide-react";
 
@@ -24,7 +24,7 @@ export default function ModuleTopicsPage() {
 
     // Resolve slugs to actual blog objects
     const moduleBlogs = moduleData.blogSlugs
-        .map((slug) => INITIAL_BLOGS.find((b) => b.slug === slug))
+        .map((slug) => allBlogs.find((b) => b.slug === slug))
         .filter((b) => b !== undefined);
 
     // Filter based on local search

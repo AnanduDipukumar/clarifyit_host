@@ -1,838 +1,616 @@
 import { BlogPostStats } from "./db";
 
 export interface BlogPost {
-  slug: string;
-  title: string;
-  description: string;
-  category: string;
-  categorySlug?: string;
-  imageUrl?: string;
-  content: string;
-  publishedAt: string;
-  tags?: string[];
+    slug: string;
+    title: string;
+    description: string;
+    category: string;
+    categorySlug?: string;
+    imageUrl?: string;
+    content: string;
+    publishedAt: string;
+    tags?: string[];
 }
 
-export const INITIAL_BLOGS: BlogPost[] = [
-  {
-    slug: "what-is-voltage",
-    title: "What is Voltage? A Simple Explanation",
-    description: "Understand the 'push' that makes electricity move. Includes water analogy and derivations.",
-    category: "Physics",
-    publishedAt: "2023-10-01",
-    imageUrl: "/images/voltage-analogy.png",
-    tags: ["Physics", "Basics", "KTU", "Engineering", "Electrical Engineering"],
-    content: `
-## The Driving Force
 
-Imagine you have a new toy car, but it won't move. You need to push it. In the world of electricity, **Voltage** is that push.
 
-Without voltage, electrons (the tiny particles that carry energy) just drift around aimlessly inside a wire. Voltage gives them direction and energy.
-
-> **Key Concept:** Voltage is the **Pressure**. Current is the **Flow**.
-
-### The Water Tank Analogy
-To truly understand voltage, forget wires for a second. Think about **Water**.
-
-1.  **Water** = Electrons (The stuff that moves)
-2.  **Pipe** = Wire (The path)
-3.  **Pressure** = **Voltage** (The force)
-
-Imagine two water tanks connected by a pipe.
-*   **Case A**: Both tanks are at the same height. *Result*: Water doesn't flow.
-*   **Case B**: One tank is high up, the other is low. *Result*: Water rushes down.
-
-![Voltage Water Analogy](/images/voltage-analogy.png)
-
-**Voltage is that height difference.** It is the "Electrical Pressure" that forces current to flow.
-
-### Reinventing the Math
-Why do we measure Voltage in Volts? And what does it actually mean?
-
-Physics defines Voltage ($V$) as **Work done per unit Charge**.
-
-$$ V = \\frac{W}{Q} $$
-
-*   **Work ($W$)**: Energy spent (Joules).
-*   **Charge ($Q$)**: The amount of electricity (Coulombs).
-
-**Think of it like this:**
-You are a delivery driver (The Electron).
-*   **The Package**: Top secret energy (Joules).
-*   **The Destination**: A lightbulb.
-*   **Voltage**: How much energy (Package) you are carrying per truck.
-
-> If you have a **9V Battery**, it means every Coulomb of charge is carrying **9 Joules** of energy to dump into your circuit.
-
-### Common Misconceptions
-
-> **Myth:** "Voltage flows through the wire."
->
-> **Fact:** No! Voltage doesn't flow. **Current** flows. Voltage is just the pressure pushing the current. You can have Voltage without Current (like a battery sitting on a shelf), but you can't have Current without Voltage.
-
-### Summary
-*   **Symbol**: $V$
-*   **Unit**: Volts ($V$) (= Joules per Coulomb)
-*   **Role**: The Push / Pressure.
-    `,
-  },
-  {
-    slug: "voltage-vs-current",
-    title: "Difference Between Voltage and Current",
-    description: "One pushes, the other flows. Clear up the confusion once an for all.",
-    category: "Physics",
-    publishedAt: "2023-10-02",
-    imageUrl: "/images/voltage-vs-current.png",
-    tags: ["Physics", "Basics", "KTU", "Engineering", "Electrical Engineering"],
-    content: `
-## The Gun and The Bullet
-
-People often use "High Voltage" and "High Current" interchangeably, but they are very different things.
-
-Think of a **Gun**:
-*   **Voltage** is the gunpowder explosion (The Energy/Speed).
-*   **Current** is the bullet itself (The Mass/Object).
-
-A grain of sand moving at light speed (High Voltage, Low Current) will hurt.
-A slow-moving mountain (Low Voltage, High Current) will also hurt.
-But they hurt for different reasons!
-
-### The Water Analogy Revisited
-
-| Feature | Voltage ($V$) | Current ($I$) |
-| :--- | :--- | :--- |
-| **Water Analogy** | **Pressure** (Water Height) | **Flow Rate** (Gallons per minute) |
-| **Role** | The Use | The Effect |
-| **Can exist alone?** | **Yes** (A closed tap has pressure) | **No** (Flow needs pressure) |
-
-![Voltage vs Current Analogy](/images/voltage-vs-current.png)
-
-### Ohm's Law: The Connection
-These two are best friends. They are linked by **Resistance** ($R$).
-
-$$ I = \\frac{V}{R} $$
-
-Let's "reinvent" this formula logic:
-1.  If I push harder ($V$ goes up), more water flows ($I$ goes up). -> $I \\propto V$.
-2.  If the pipe is clogged ($R$ goes up), less water flows ($I$ goes down). -> $I \\propto 1/R$.
-
-Combine them: **$I = V / R$**.
-
-### Common Misconceptions
-
-> **Myth:** "It's not the Voltage that kills you, it's the Current."
->
-> **Fact:** Partially true, but dangerous. You need Voltage to *push* that Current through your skin. A 12V car battery can deliver hundreds of Amps (Huge Current), but you can touch it safely because 12V isn't enough "pressure" to push through your skin. You need **both**.
-
-### Summary
-*   **Voltage**: The Cause (Push).
-*   **Current**: The Effect (Flow).
-    `,
-  },
-  {
-    slug: "what-is-resistance",
-    title: "What is Resistance? The Traffic Jam",
-    description: "Why doesn't electricity flow instantly? The physics of resistance and heat.",
-    category: "Physics",
-    publishedAt: "2023-10-05",
-    imageUrl: "/images/resistance-traffic.png",
-    tags: ["Physics", "Basics", "KTU", "Engineering", "Electrical Engineering"],
-    content: `
-## Fighting the Flow
-
-Imagine you are driving a Ferrari (The Electron) on a wide, empty highway. You can go fast!
-Now imagine that highway suddenly narrows down to one lane, and the road is full of potholes. You have to slow down.
-
-**That is Resistance.**
-
-In a wire, electrons don't fly freely. They crash into the atoms of the metal.
-*   **Collision** = Friction.
-*   **Friction** = Heat.
-*   **Result** = Slower Flow (Less Current).
-
-### Visualization: The Traffic Jam
-![Resistance Traffic Analogy](/images/resistance-traffic.png)
-
-*   **Highway Width** = Wire Thickness (Area). Wider road = Easier flow = Low Resistance.
-*   **Highway Length** = Wire Length. Longer trip = More traffic = High Resistance.
-
-### The Math of Construction
-Resistance ($R$) is built into the object. It depends on 4 things:
-
-$$ R = \\rho \\frac{L}{A} $$
-
-Let's derive why:
-1.  **Length ($L$)**: Twice the length means twice the obstacles. So $R \\propto L$.
-2.  **Area ($A$)**: Twice the width means twice the room to move. So $R \\propto 1/A$ (Inversely proportional).
-3.  **Rho ($\\rho$)**: The "stickiness" of the road. Copper is smooth (Low $\\rho$), Rubber is sticky (High $\\rho$).
-
-### Why do we need it?
-If Resistance limits flow, isn't it bad?
-**No!** We use resistance to turn electricity into useful things.
-*   **Light Bulbs**: The filament has high resistance $\\to$ gets hot $\\to$ glows.
-*   **Heaters**: Resistance turns energy directly into heat.
-
-### Common Misconceptions
-
-> **Myth:** "Superconductors have zero resistance, so they create infinite energy."
->
-> **Fact:** No. They just don't *waste* energy as heat. You still need to put energy in to get energy out.
-
-### Summary
-*   **Symbol**: $R$.
-*   **Unit**: Ohms ($\\Omega$).
-*   **Concept**: Electrical Friction.
-    `,
-  },
-  {
-    slug: "kmh-to-ms-conversion",
-    title: "Converting km/h to m/s: The Magic 3.6",
-    description: "Don't memorize the number. Understand where it comes from.",
-    category: "Math",
-    publishedAt: "2023-10-10",
-    imageUrl: "/images/speed-conversion.png",
-    tags: ["Math", "Basics", "Physics"],
-    content: `
-## Why is this confusing?
-
-In Physics class, you often get speed in **km/h** (like a car), but equations need **m/s** (meters per second).
-You might hear "Divide by 3.6", but *why*?
-
-Let's derive it from scratch so you never forget.
-
-### The Setup
-We start with **1 km/h**.
-This means we travel **1 Kilometer** in **1 Hour**.
-
-$$ \\text{Speed} = \\frac{1 \\text{ km}}{1 \\text{ hour}} $$
-
-### Step 1: Fix the numerator (Distance)
-We know $1 \\text{ km} = 1000 \\text{ meters}$.
-So:
-$$ \\frac{1000 \\text{ m}}{1 \\text{ hour}} $$
-
-### Step 2: Fix the denominator (Time)
-We know $1 \\text{ hour} = 60 \\text{ minutes}$.
-And $1 \\text{ minute} = 60 \\text{ seconds}$.
-So $1 \\text{ hour} = 60 \\times 60 = 3600 \\text{ seconds}$.
-
-Put that in step 1:
-$$ \\frac{1000 \\text{ m}}{3600 \\text{ s}} $$
-
-### Step 3: Simplify
-Now we just divide the numbers.
-$$ \\frac{1000}{3600} = \\frac{10}{36} = \\frac{1}{3.6} $$
-
-**Result:** To go from km/h to m/s, you are essentially multiplying by $1/3.6$, which is the same as **dividing by 3.6**.
-
-![Speed Conversion Chart](/images/speed-conversion.png)
-
-### Summary Rule
-*   **Big Unit (km/h) $\\to$ Small Unit (m/s)**: Variable gets smaller. **Divide**.
-*   **Small Unit (m/s) $\\to$ Big Unit (km/h)**: Variable gets bigger. **Multiply**.
-
-### Common Misconceptions
-
-> **Myth:** "There are 100 seconds in a minute."
->
-> **Fact:** This is a classic exam panic mistake. Always use 60! $60 \\times 60 = 3600$.
-
-### Practice
-Try converting $72 \\text{ km/h}$.
-$$ \\frac{72}{3.6} = 20 \\text{ m/s} $$
-    `,
-  },
-  {
-    slug: "absorption-spectra-missing-lines",
-    title: "The Missing Colors: Absorption Spectra",
-    description: "How we read the 'barcodes' of stars billions of miles away.",
-    category: "Chemistry",
-    publishedAt: "2023-10-12",
-    imageUrl: "/images/absorption-spectra.png",
-    tags: ["Chemistry", "Space", "Science", "Astronomy"],
-    content: `
-## The Puzzle
-If you shine pure white light through a prism, you get a perfect rainbow.
-But if you look at sunlight through a high-tech prism, you spot something weird: **Tiny black lines**.
-Specific colors are missing. Where did they go?
-
-### The thief: Atoms
-Light travels from the sun's hot core through its cooler outer atmosphere.
-The atoms in that atmosphere (Hydrogen, Helium, etc.) are "hungry" for energy.
-
-### The Ladder (Quantum Mechanics)
-Imagine an electron orbiting an atom.
-**Rule #1:** It cannot orbit "anywhere". It can only stand on specific rungs of a ladder (Energy Levels).
-**Rule #2:** To climb up a rung, it needs **exact change**.
-
-If the gap between Rung 1 and Rung 2 costs **2.5 Joules**, the electron needs a photon with **exactly** 2.5 Joules.
-*   Photon A (2.4 Joules): Ignored. Passes through.
-*   Photon B (2.6 Joules): Ignored. Passes through.
-*   Photon C (2.5 Joules): **ABSORBED!**
-
-The electron eats Photon C and jumps up.
-Since Photon C is gone, that specific "color" disappears from the rainbow.
-
-![Absorption Spectra Diagram](/images/absorption-spectra.png)
-
-### The Fingerprint
-Every element (Hydrogen, Carbon, Gold) has a unique ladder with different rung spacing.
-This means Hydrogen eats specific colors. Helium eats different colors.
-
-By looking at *which* lines are black, we can tell exactly what elements are in a star, even if it's across the galaxy.
-
-### Common Misconceptions
-
-> **Myth:** "The lines are black because the star is cold."
->
-> **Fact:** No, the lines are black because that specific light was absorbed by atoms in the star's atmosphere before it reached us.
-
-### Key Formula
-$$ E = hf $$
-(Energy of a photon = Planck's Constant $\\times$ Frequency)
-    `,
-  },
-  {
-    slug: "ac-vs-dc",
-    title: "AC vs DC: The War of Currents",
-    description: "Why does your wall outlet shake electrons back and forth?",
-    category: "Engineering",
-    publishedAt: "2023-10-15",
-    imageUrl: "/images/ac-vs-dc.png",
-    tags: ["Engineering", "Electrical Engineering", "History", "KTU"],
-    content: `
-## The Battle
-In the 1880s, Thomas Edison (Team DC) and Nikola Tesla (Team AC) had a massive feud.
-*   **DC (Direct Current)**: Electrons flow in a straight line, like a river.
-*   **AC (Alternating Current)**: Electrons wiggle back and forth, like a saw.
-
-AC won the war for the Power Grid. But why?
-
-![AC vs DC Waveforms](/images/ac-vs-dc.png)
-
-### The Problem: Calculation
-We need to send power from a plant to your house (100 miles away).
-The wire has **Resistance ($R$)**.
-Current ($I$) flowing through resistance creates heat (Loss).
-
-$$ P_{loss} = I^2 R $$
-
-Look at the $I^2$.
-*   If current is 1 Amp, Loss is $1^2 = 1$ Unit.
-*   If current is 10 Amps, Loss is $10^2 = 100$ Units!
-
-> **Current is the enemy.** We need to lower Current to save energy.
-
-### The Solution: High Voltage
-We know power is: $P = V \\times I$.
-To keep Power ($P$) high but Current ($I$) low, we must make Voltage ($V$) **super high**.
-
-We need to step up the voltage to 400,000V for the trip, and step it down to 110V for your house.
-**Transformers** can do this easily for AC. They *cannot* do it easily for DC (back in 1880).
-
-That is why our grid is AC.
-
-### The Comeback of DC
-Today, DC is winning in your house.
-*   LEDs? DC.
-*   Laptops? DC.
-*   Phones? DC.
-Because microchips need a steady "river" of electrons, not a shaking saw. That's why every charger has a "brick" – it converts AC from the wall to DC for your device.
-
-### Common Misconceptions
-
-> **Myth:** "AC is faster than DC."
->
-> **Fact:** Electricity travels at near light speed in both. AC simply changes direction, while DC goes straight.
-
-### Summary
-*   **AC**: Efficient for Transport (Grid).
-*   **DC**: Efficient for Computing (Devices).
-    `,
-  },
-  {
-    slug: "what-is-emi",
-    title: "EMI: The Invisible Pollution",
-    description: "Why you have to turn on Airplane Mode.",
-    category: "Engineering",
-    publishedAt: "2023-10-18",
-    imageUrl: "/images/emi-shielding.png",
-    tags: ["Engineering", "Electronics", "Physics"],
-    content: `
-## Ghost in the Machine
-Have you ever heard a buzzing sound in your speakers right before your phone rings?
-That is **EMI** (Electromagnetic Interference).
-
-Your phone sent a powerful radio signal to the cell tower. Your speaker wires acted like an antenna, "caught" that signal, and turned it into buzzing noise.
-
-### The Science: Faraday's Law
-Why did the wire catch the signal?
-Physics tells us: **A changing Magnetic Field creates an Electric Current.**
-
-$$ \\text{Change in B-Field} \\rightarrow \\text{Induced Current} $$
-
-1.  Radio waves are changing magnetic fields.
-2.  They pass through the wire.
-3.  They force electrons in the wire to move (Current).
-4.  This "ghost" current messes up the real signal.
-
-### The Solution: The Faraday Cage
-How do we stop it? We put the sensitive stuff in a metal box.
-
-![EMI Shielding Cage](/images/emi-shielding.png)
-
-When the radio waves hit the metal box, they induce a current **in the box's surface**. This current cancels out the wave. The inside of the box remains perfectly silent and safe.
-
-This is why:
-*   Microwaves have a metal mesh window (keeps waves in).
-*   Elevators kill your cell signal (metal box keeps waves out).
-*   Coaxial cables (TV cords) have a metal foil wrap.
-
-### Common Misconceptions
-
-> **Myth:** "Aluminum foil boosts your Wifi signal."
->
-> **Fact:** Actually, metal **blocks** radio waves. If you put foil behind the router, it might *reflect* the signal directionally, but wrapping your antenna in foil will kill the signal dead.
-
-### Summary
-*   **Problem**: Invisible waves creating unwanted currents.
-*   **Solution**: Metal Shielding.
-    `,
-  },
-  {
-    slug: "why-transformers",
-    title: "Transformers: More Than Meets the Eye",
-    description: "How a simple iron ring powers the entire modern world.",
-    category: "Engineering",
-    publishedAt: "2023-10-20",
-    imageUrl: "/images/transformer-coil.png",
-    tags: ["Engineering", "Electrical Engineering", "Machines", "KTU"],
-    content: `
-## The Magic Machine
-A transformer can turn 10,000 Volts into 10 Volts.
-It has no moving parts. No gears. No motors. It just sits there and hums. How?
-
-### The Anatomy
-1.  **Iron Core**: A square ring of magnetic iron.
-2.  **Primary Coil**: Wire wrapped around the left side.
-3.  **Secondary Coil**: Wire wrapped around the right side.
-**Crucially: The two wires NOT touch.** They are electrically isolated.
-
-![Transformer Coil Diagram](/images/transformer-coil.png)
-
-### The Process
-1.  **AC IN**: Alternating current flows in the Primary Coil.
-2.  **Magnetism**: This creates a *changing* magnetic field in the Iron Ring.
-3.  **Induction**: The magnetic field travels around the ring to the Secondary Coil.
-4.  **AC OUT**: The changing magnetic field pushes electrons in the Secondary Coil.
-
-### The Math: It's a Ratio
-The voltage change depends purely on the number of wire loops (Turns, $N$).
-
-$$ \\frac{V_{out}}{V_{in}} = \\frac{N_{out}}{N_{in}} $$
-
-**Example:**
-*   Primary ($N_{in}$): 1000 turns.
-*   Secondary ($N_{out}$): 100 turns.
-*   Ratio is 10:1.
-*   If you put **100V** in, you get **10V** out.
-
-> You just made a "Step-Down" transformer (like your phone charger).
-> Reverse the coils, and you get a "Step-Up" transformer (used at power plants).
-
-### Common Misconceptions
-
-> **Myth:** "Transformers create energy."
->
-> **Fact:** Impossible. Energy is conserved. If Voltage goes **DOWN**, Current goes **UP**.
->
-> $P_{in} = P_{out}$
->
-> $100V \\times 1A = 10V \\times 10A$ (Both are 100 Watts).
-
-### Summary
-Transformers trade Voltage for Current using magnetism.
-    `,
-  },
-  {
-    slug: "what-is-frequency",
-    title: "What is Frequency? The Rhythm of Physics",
-    description: "From the beating of your heart to the color of the sky.",
-    category: "Physics",
-    publishedAt: "2023-10-22",
-    imageUrl: "/images/frequency-waves.png",
-    tags: ["Physics", "Waves", "Science"],
-    content: `
-## It's All Waves
-Sound is a wave. Light is a wave. Radio is a wave.
-The only difference between a deep bass note and a high squeak is **Frequency**.
-
-**Frequency ($f$)** is: How many times does the wave wiggle per second?
-
-### The Unit: Hertz
-Named after Heinrich Hertz.
-*   **1 Hz**: One wiggle per second.
-*   **1 kHz**: 1,000 wiggles.
-*   **1 MHz**: 1,000,000 wiggles (1 Million).
-
-### Visualizing it
-![Frequency Waves Diagram](/images/frequency-waves.png)
-
-*   **Low Frequency**: Lazy waves. Spread out. (Red light, Deep Voice).
-*   **High Frequency**: Hyperactive waves. Packed tight. (Blue light, Whistle).
-
-### The Math: Speed, Time, and Distance
-Frequency is tied to Wavelength ($\\lambda$, the length of one wave).
-Imagine a train (the wave) moving at speed $v$.
-If the cars are short (small wavelength), many pass you per second (high frequency).
-
-$$ v = f \\times \\lambda $$
-
-**Example: Light**
-Light travels at $c = 300,000,000$ m/s.
-If you have a Red light wave ($\\lambda = 700$ nm), what is $f$?
-$$ f = \\frac{c}{\\lambda} = \\approx 430 \\text{ Trillion Hz} $$
-That's how fast the electric field wiggles to make the color Red!
-
-### Common Misconceptions
-
-> **Myth:** "Radio waves are different stuff than Light."
->
-> **Fact:** No. They are both Electromagnetic Radiation. Radio is just a "color" of light that our eyes can't see because the frequency is too low.
-
-### Summary
-*   Frequency = Pitch (Sound) or Color (Light).
-*   Higher Frequency = Higher Energy.
-    `,
-  },
-  {
-    slug: "series-vs-parallel",
-    title: "Series vs Parallel: How to Wire",
-    description: "Why your house lights don't all go out when one bulb blows.",
-    category: "Engineering",
-    publishedAt: "2023-10-25",
-    imageUrl: "/images/series-parallel.png",
-    tags: ["Engineering", "Basics", "Electrical Engineering"],
-    content: `
-## The Holiday Light Disaster
-In the old days, if one Christmas light broke, the whole string went dark. You had to test every single bulb to find the bad one.
-This was a **Series** circuit.
-Today, if one breaks, the rest stay on. This is a **Parallel** circuit.
-
-### Series: The Single File Line
-Imagine a single lane road.
-*   The current must flow through Bulb 1, then Bulb 2, then Bulb 3.
-*   **Obstacles add up**: $R_{total} = R_1 + R_2 + R_3$.
-*   **Weakness**: If the road is blocked at Bulb 1, traffic stops everywhere.
-*   **Effect**: Bulbs share the voltage. 3 bulbs on a 9V battery get 3V each (Dim).
-
-### Parallel: The Multi-Lane Highway
-Imagine a highway splits into 3 lanes.
-*   The current splits. Some goes to Bulb 1, some to Bulb 2.
-*   **Independence**: If Lane 1 is blocked, traffic still flows in Lane 2 and 3.
-*   **Effect**: Each bulb gets the full 9V (Bright).
-
-![Series vs Parallel Diagram](/images/series-parallel.png)
-
-### The Math of Parallel Resistance
-This surprises people. Adding more resistors in parallel makes the total resistance **LOWER**.
-$$ \\frac{1}{R_{total}} = \\frac{1}{R_1} + \\frac{1}{R_2} $$
-
-> **Logic by Analogy:** opening a second checkout lane at the supermarket makes the line move *faster*, even if the second cashier is slow. More paths = Easier flow.
-
-### Common Misconceptions
-
-> **Myth:** "Batteries in parallel gives more voltage."
->
-> **Fact:** No.
-> *   **Series Batteries**: Voltages add up ($1.5V + 1.5V = 3V$). Use for power.
-> *   **Parallel Batteries**: Voltage stays $1.5V$, but it lasts twice as long. Use for endurance.
-
-### Summary
-*   **House Wiring**: Always Parallel.
-*   **Flashlights**: Batteries often in Series.
-    `,
-  },
-  {
-    slug: "quantum-entanglement",
-    title: "What Is Quantum Entanglement? Spooky Action",
-    description: "Einstein called it 'spooky action at a distance'. How can two particles communicate instantly across the universe?",
-    category: "Physics",
-    publishedAt: "2023-11-01",
-    imageUrl: "/images/entanglement.png",
-    tags: ["Physics", "Quantum Mechanics", "Sci-Fi", "Science"],
-    content: `
-## Faster Than Light?
-
-Imagine you have two magical coins. You flip them at the exact same moment.
-If Coin A lands **Heads**, Coin B *instantly* lands **Tails**. Always.
-Even if Coin A is in New York and Coin B is on Mars.
-
-This is **Quantum Entanglement**.
-
-### The Gloves Analogy
-Einstein hated this idea. He thought it was just hidden information.
-Like a pair of gloves:
-1.  Put a **Left Glove** in one box.
-2.  Put a **Right Glove** in another box.
-3.  Send them to opposite sides of the world.
-4.  If you open Box 1 and see "Left", you *instantly* know Box 2 is "Right".
-
-> **The Twist:** In Quantum Mechanics, the gloves **don't have a shape** until you open the box. They are a blurry mix of Left AND Right. The moment you look at one, it *decides* to be Left, and the other one *instantly decides* to be Right to match it.
-
-![Entanglement Diagram](/images/entanglement.png)
-
-### Why is this weird?
-Classical physics says information travels at the speed of light.
-If the particles are light-years apart, how does the second one know *instantly* what the first one did?
-Quantum mechanics says: **They aren't two separate objects anymore.** They are one single system stretched across space.
-
-### Common Misconceptions
-
-> **Myth:** "We can use entanglement to send messages faster than light."
->
-> **Fact:** No. You can't control *which* answer you get (Heads or Tails). It's random. You only know that the other person got the opposite. Randomness helps with encryption (Quantum Cryptography), not communication.
-
-### Real-World Connection
-*   **Quantum Computers**: Use entanglement to perform massive calculations in parallel.
-*   **Cryptography**: Unbreakable codes.
-
-### Q&A
-1.  **Can we teleport humans?** not yet. We can teleport the "state" of an atom, but not the atom itself.
-2.  **Does distance matter?** No. It works across galaxies.
-    `,
-  },
-  {
-    slug: "time-dilation-gravity",
-    title: "Why Time Slows Down Near Black Holes",
-    description: "Gravity doesn't just pull objects. It pulls Time itself.",
-    category: "Physics",
-    publishedAt: "2023-11-05",
-    imageUrl: "/images/time-dilation.png",
-    tags: ["Physics", "Relativity", "Space", "Astronomy"],
-    content: `
-## The Interstellar Scenario
-
-In the movie *Interstellar*, 1 hour on the water planet = 7 years on Earth.
-This isn't just movie magic. It's **General Relativity**.
-
-### Gravity is Geometry
-Imagine Space and Time are a flexible fabric (like a trampoline).
-1.  Heavy objects (like the Sun) stretch the fabric downward.
-2.  This stretching is **Gravity**.
-
-But they don't just stretch *Space*. They stretch *Time*.
-
-### The GPS Proof
-You use this every day.
-GPS satellites fly 20,000 km up, where Earth's gravity is weaker.
-*   **On Earth (Strong Gravity):** Time moves Slower.
-*   **In Space (Weak Gravity):** Time moves Faster.
-
-If engineers didn't program the satellite clocks to "tick" slower to match us, your Google Maps would be wrong by **10 kilometers every day**.
-
-![Spacetime Curvature](/images/time-dilation.png)
-
-### Why? The Light Clock
-Einstein realized the Speed of Light ($c$) is constant.
-If gravity curves space, light has to travel a longer, curved path.
-For light to arrive at the same speed while traveling a longer distance, **Time itself must slow down** to compensate.
-
-$$ \\text{Speed} = \\frac{\\text{Distance}}{\\text{Time}} $$
-
-If Distance goes UP (curved path), Time must go UP (slow down) to keep Speed constant.
-
-### Common Misconceptions
-
-> **Myth:** "Time stops inside a Black Hole."
->
-> **Fact:** To an outside observer, it looks like it stops. To the person falling in, time feels normal... until they get crushed.
-
-### Q&A
-1.  **Do my feet age slower than my head?** Yes! Gravity is stronger at your feet. But the difference is tiny (nanoseconds per lifetime).
-2.  **Is time travel possible?** Forward? Yes, go near a black hole. Backward? Probably not.
-    `,
-  },
-  {
-    slug: "why-sky-is-blue",
-    title: "Why Is the Sky Blue? (It's Not the Ocean)",
-    description: "The physics of sunlight, atmosphere, and why sunsets are red.",
-    category: "Science",
-    publishedAt: "2023-11-08",
-    imageUrl: "/images/blue-sky.png",
-    tags: ["Science", "Physics", "Nature", "Basics"],
-    content: `
-## The Color of Air
-
-Ask a child why the sky is blue, and they might say "It reflects the ocean."
-But the sky is blue even in the middle of a continent!
-
-### The Prism in the Sky
-Sunlight looks white, but it's actually a rainbow of all colors mixed together.
-*   **Red**: Long, lazy waves.
-*   **Blue**: Short, energetic waves.
-
-When sunlight hits the atmosphere, it crashes into Nitrogen and Oxygen molecules.
-
-### Rayleigh Scattering
-The rule is simple: **Small obstacles scatter small waves.**
-1.  **Red waves** are big. They step over the air molecules like a giant stepping over rocks. They go straight through.
-2.  **Blue waves** are tiny. They crash into the molecules and bounce off in every direction.
-
-![Rayleigh Scattering](/images/blue-sky.png)
-
-When you look up, you aren't looking at the sun. You are looking at the *scattered* light bouncing around the air. Since Blue is the most scattered, the sky glows Blue.
-
-### What about Sunsets?
-At sunset, the sun is low. Light travels through **much more air** to reach you.
-By the time the light arrives:
-*   All the Blue has been scattered away completely.
-*   Only the **Red and Orange** (which go straight) are left to hit your eyes.
-
-### Common Misconceptions
-
-> **Myth:** "Violet scatters more than Blue, so why isn't the sky Violet?"
->
-> **Fact:** Good question! Violet *does* scatter more. BUT: 1) The sun emits less violet light to begin with. 2) Human eyes are much more sensitive to Blue than Violet. Our brain ignores the weak violet signal.
-
-### Q&A
-1.  **What color is the sky on Mars?** Red/Pink, because Martian dust scatters red light differently.
-2.  **Why are clouds white?** Water droplets are huge compared to air molecules. They scatter ALL colors equally. $Red + Blue + Green = White$.
-    `,
-  },
-  {
-    slug: "derivative-intuition",
-    title: "What Is a Derivative? The Speedometer Logic",
-    description: "Calculus isn't about memorizing rules. It's about measuring change.",
-    category: "Math",
-    publishedAt: "2023-11-12",
-    imageUrl: "/images/derivative-slope.png",
-    tags: ["Math", "Calculus", "Intuition", "Basics"],
-    content: `
-## The Impossible Snapshot
-
-Imagine you take a photo of a moving car.
-In the photo, is the car moving?
-No. It's frozen. It has a position, but no speed.
-
-So how do we measure speed (Change) at a specific instant?
-**That is the Derivative.**
-
-### The Slope
-In algebra, you learned Slope = Rise / Run.
-$$ \\text{Slope} = \\frac{\\Delta y}{\\Delta x} $$
-
-This works for straight lines. But real life is curved.
-A Derivative is just finding the **Slope** of a curved line at a single tiny point.
-
-### The Zoom In
-Imagine a roller coaster track (a curve).
-If you zoom in $1000\\times$ on a specific loop-de-loop, the track looks flat.
-The **Derivative** is just the steepness of that tiny, zoomed-in section.
-
-![Derivative Tangent Line](/images/derivative-slope.png)
-
-### Why do we care?
-*   Function: **Position** (Where am I?)
-*   Derivative: **Velocity** (How fast am I changing position?)
-*   Derivative of Derivative: **Acceleration** (How fast am I changing speed?)
-
-Calculus lets us predict the future by understanding how things change *right now*.
-
-### Common Misconceptions
-
-> **Myth:** "Need to be a genius to do Calculus."
->
-> **Fact:** You do calculus every time you drive. You see a red light (Position), you hit the brake (Acceleration), to reduce your speed (Velocity) to zero. You intuitively understand rates of change.
-
-### Q&A
-1.  **What is an Integral?** The opposite. A derivative cuts a shape into slices to see the slope. An Integral glues slices together to find the Area.
-    `,
-  },
-  {
-    slug: "why-ice-floats",
-    title: "Why Ice Floats? The Water Weirdness",
-    description: "Almost every solid sinks in its own liquid. Why is water different?",
-    category: "Chemistry",
-    publishedAt: "2023-11-15",
-    imageUrl: "/images/ice-lattice.png",
-    tags: ["Chemistry", "Water", "Nature", "Basics"],
-    content: `
-## The Exception to the Rule
-
-If you throw a solid rock into molten rock (lava), it sinks.
-If you throw a piece of solid iron into molten iron, it sinks.
-Solids are usually **denser** (packed tighter) than liquids.
-
-But throw solid water (Ice) into liquid water... and it **floats**.
-If it didn't, life on Earth would die. Oceans would freeze from the bottom up!
-
-### The Hydrogen Bond Cage
-Water molecules ($H_2O$) are like magnets. One side is positive, the other negative. They stick together.
-1.  **In Liquid:** They are energetic and jumbled up. They slide past each other closely.
-2.  **In Ice (Solid):** They lock into a rigid **Hexagonal Crystal**.
-
-To make this hexagon shape, the molecules have to push each other apart slightly.
-It requires **Empty Space** in the middle of the ring.
-
-![Ice Lattice Structure](/images/ice-lattice.png)
-
-Because of this specific crystal shape, Ice takes up **9% more space** (Volume) than liquid water.
-Same mass + More volume = **Lower Density**.
-
-### Common Misconceptions
-
-> **Myth:** "Ice floats because of air bubbles trapped inside."
->
-> **Fact:** No. Even perfectly clear, bubble-free ice floats. It is the molecular structure itself that expands.
-
-### Real-World Connection
-*   **Potholes**: Water seeps into road cracks, freezes, expands, and breaks the asphalt.
-*   **Frozen Pipes**: Expands and bursts metal pipes.
-
-### Q&A
-1.  **At what temperature is water heaviest?** 4°C. Just before it starts expanding to freeze.
-    `,
-  },
-  {
-    slug: "double-slit-experiment",
-    title: "The Double Slit Experiment: Reality Is Weird",
-    description: "The most famous experiment in physics. Are we particles or waves?",
-    category: "Physics",
-    publishedAt: "2023-11-20",
-    imageUrl: "/images/double-slit.png",
-    tags: ["Physics", "Quantum Mechanics", "History", "Mind-Blowing"],
-    content: `
-## Marble vs. Wave
-
-If you shoot marbles at a wall with two slits, you get two piles of marbles on the back wall.
-If you send water waves through two slits, the waves ripple and overlap, creating an **Interference Pattern** (many stripes).
-
-### The Electron Mystery
-Scientists fired electrons (tiny particles) at two slits.
-They expected two piles (like marbles).
-They got... **Interference Stripes (like waves)**.
-
-Wait. How can a single particle ripple like a wave? It seems to go through **both slits at the same time**.
-
-### The Observer Effect
-"Okay," scientists said. "Let's put a camera to watch which slit it goes through."
-They turned the camera on.
-Suddenly, the electrons stopped acting like waves. They started acting like marbles again! Two piles.
-
-**The act of measuring collapsed the reality.**
-When you don't look, it's a wave of potential.
-When you look, it forces it to choose a path.
-
-![Double Slit Diagram](/images/double-slit.png)
-
-### Common Misconceptions
-
-> **Myth:** "Consciousness causes the collapse. The electron knows I'm watching."
->
-> **Fact:** No. "Observing" in physics means interacting. To "see" an electron, you must bounce a photon off it. That photon hits the electron and disturbs it, destroying the delicate wave pattern. It's clumsy interaction, not magic mind power.
-
-### Q&A
-1.  **Does this happen with big objects?** Technically yes, but the wavelength is so tiny it's unnoticeable. You aren't going to wave-form through a door.
-    `,
-  },
+import { BLOGS_PART_1 } from "./data/blogs_part1";
+import { BLOGS_PART_2 } from "./data/blogs_part2";
+import { BLOGS_PART_3 } from "./data/blogs_part3";
+import { BLOGS_PART_4 } from "./data/blogs_part4";
+import { BLOGS_PART_5 } from "./data/blogs_part5";
+import { BLOGS_PART_6 } from "./data/blogs_part6";
+import { BLOGS_PART_7 } from "./data/blogs_part7";
+import { BLOGS_PART_8 } from "./data/blogs_part8";
+import { BLOGS_PART_9 } from "./data/blogs_part9";
+import { BLOGS_PART_10 } from "./data/blogs_part10";
+import { BLOGS_PART_11 } from "./data/blogs_part11";
+import { BLOGS_PART_12 } from "./data/blogs_part12";
+import { BLOGS_PART_13 } from "./data/blogs_part13";
+import { BLOGS_PART_14 } from "./data/blogs_part14";
+import { BLOGS_PART_15 } from "./data/blogs_part15";
+import { BLOGS_PART_16 } from "./data/blogs_part16";
+import { BLOGS_PART_17 } from "./data/blogs_part17";
+import { BLOGS_PART_18 } from "./data/blogs_part18";
+import { BLOGS_PART_19 } from "./data/blogs_part19";
+import { BLOGS_PART_20 } from "./data/blogs_part20";
+import { BLOGS_PART_21 } from "./data/blogs_part21";
+import { BLOGS_PART_22 } from "./data/blogs_part22";
+import { BLOGS_PART_23 } from "./data/blogs_part23";
+import { BLOGS_PART_24 } from "./data/blogs_part24";
+import { BLOGS_PART_25 } from "./data/blogs_part25";
+import { BLOGS_PART_26 } from "./data/blogs_part26";
+import { BLOGS_PART_27 } from "./data/blogs_part27";
+import { BLOGS_PART_28 } from "./data/blogs_part28";
+import { BLOGS_PART_29 } from "./data/blogs_part29";
+import { BLOGS_PART_30 } from "./data/blogs_part30";
+import { BLOGS_PART_31 } from "./data/blogs_part31";
+import { BLOGS_PART_32 } from "./data/blogs_part32";
+import { BLOGS_PART_33 } from "./data/blogs_part33";
+import { BLOGS_PART_34 } from "./data/blogs_part34";
+import { BLOGS_PART_35 } from "./data/blogs_part35";
+import { BLOGS_PART_36 } from "./data/blogs_part36";
+import { BLOGS_PART_37 } from "./data/blogs_part37";
+import { BLOGS_PART_38 } from "./data/blogs_part38";
+import { BLOGS_PART_39 } from "./data/blogs_part39";
+import { BLOGS_PART_40 } from "./data/blogs_part40";
+import { BLOGS_PART_41 } from "./data/blogs_part41";
+import { BLOGS_PART_42 } from "./data/blogs_part42";
+import { BLOGS_PART_43 } from "./data/blogs_part43";
+import { BLOGS_PART_44 } from "./data/blogs_part44";
+import { BLOGS_PART_45 } from "./data/blogs_part45";
+import { BLOGS_PART_46 } from "./data/blogs_part46";
+import { BLOGS_PART_47 } from "./data/blogs_part47";
+import { BLOGS_PART_48 } from "./data/blogs_part48";
+import { BLOGS_PART_49 } from "./data/blogs_part49";
+import { BLOGS_PART_50 } from "./data/blogs_part50";
+import { BLOGS_PART_51 } from "./data/blogs_part51";
+import { BLOGS_PART_52 } from "./data/blogs_part52";
+import { BLOGS_PART_53 } from "./data/blogs_part53";
+import { BLOGS_PART_54 } from "./data/blogs_part54";
+import { BLOGS_PART_55 } from "./data/blogs_part55";
+import { BLOGS_PART_56 } from "./data/blogs_part56";
+import { BLOGS_PART_57 } from "./data/blogs_part57";
+import { BLOGS_PART_58 } from "./data/blogs_part58";
+import { BLOGS_PART_59 } from "./data/blogs_part59";
+import { BLOGS_PART_60 } from "./data/blogs_part60";
+import { BLOGS_PART_61 } from "./data/blogs_part61";
+import { BLOGS_PART_62 } from "./data/blogs_part62";
+import { BLOGS_PART_63 } from "./data/blogs_part63";
+import { BLOGS_PART_64 } from "./data/blogs_part64";
+import { BLOGS_PART_65 } from "./data/blogs_part65";
+import { BLOGS_PART_66 } from "./data/blogs_part66";
+import { BLOGS_PART_67 } from "./data/blogs_part67";
+import { BLOGS_PART_68 } from "./data/blogs_part68";
+import { BLOGS_PART_69 } from "./data/blogs_part69";
+import { BLOGS_PART_70 } from "./data/blogs_part70";
+import { BLOGS_PART_71 } from "./data/blogs_part71";
+import { BLOGS_PART_72 } from "./data/blogs_part72";
+import { BLOGS_PART_73 } from "./data/blogs_part73";
+import { BLOGS_PART_74 } from "./data/blogs_part74";
+import { BLOGS_PART_75 } from "./data/blogs_part75";
+import { BLOGS_PART_76 } from "./data/blogs_part76";
+import { BLOGS_PART_77 } from "./data/blogs_part77";
+import { BLOGS_PART_78 } from "./data/blogs_part78";
+import { BLOGS_PART_79 } from "./data/blogs_part79";
+import { BLOGS_PART_80 } from "./data/blogs_part80";
+import { BLOGS_PART_81 } from "./data/blogs_part81";
+import { BLOGS_PART_82 } from "./data/blogs_part82";
+import { BLOGS_PART_83 } from "./data/blogs_part83";
+import { BLOGS_PART_84 } from "./data/blogs_part84";
+import { BLOGS_PART_85 } from "./data/blogs_part85";
+import { BLOGS_PART_86 } from "./data/blogs_part86";
+import { BLOGS_PART_87 } from "./data/blogs_part87";
+import { BLOGS_PART_88 } from "./data/blogs_part88";
+import { BLOGS_PART_89 } from "./data/blogs_part89";
+import { BLOGS_PART_90 } from "./data/blogs_part90";
+import { BLOGS_PART_91 } from "./data/blogs_part91";
+import { BLOGS_PART_92 } from "./data/blogs_part92";
+import { BLOGS_PART_93 } from "./data/blogs_part93";
+import { BLOGS_PART_94 } from "./data/blogs_part94";
+import { BLOGS_PART_95 } from "./data/blogs_part95";
+import { BLOGS_PART_96 } from "./data/blogs_part96";
+import { BLOGS_PART_97 } from "./data/blogs_part97";
+import { BLOGS_PART_98 } from "./data/blogs_part98";
+import { BLOGS_PART_99 } from "./data/blogs_part99";
+import { BLOGS_PART_100 } from "./data/blogs_part100";
+import { BLOGS_PART_101 } from "./data/blogs_part101";
+import { BLOGS_PART_102 } from "./data/blogs_part102";
+import { BLOGS_PART_103 } from "./data/blogs_part103";
+import { BLOGS_PART_104 } from "./data/blogs_part104";
+import { BLOGS_PART_105 } from "./data/blogs_part105";
+import { BLOGS_PART_106 } from "./data/blogs_part106";
+import { BLOGS_PART_107 } from "./data/blogs_part107";
+import { BLOGS_PART_108 } from "./data/blogs_part108";
+import { BLOGS_PART_109 } from "./data/blogs_part109";
+import { BLOGS_PART_110 } from "./data/blogs_part110";
+import { BLOGS_PART_111 } from "./data/blogs_part111";
+import { BLOGS_PART_112 } from "./data/blogs_part112";
+import { BLOGS_PART_113 } from "./data/blogs_part113";
+import { BLOGS_PART_114 } from "./data/blogs_part114";
+import { BLOGS_PART_115 } from "./data/blogs_part115";
+import { BLOGS_PART_116 } from "./data/blogs_part116";
+import { BLOGS_PART_117 } from "./data/blogs_part117";
+import { BLOGS_PART_118 } from "./data/blogs_part118";
+import { BLOGS_PART_119 } from "./data/blogs_part119";
+import { BLOGS_PART_120 } from "./data/blogs_part120";
+import { BLOGS_PART_121 } from "./data/blogs_part121";
+import { BLOGS_PART_122 } from "./data/blogs_part122";
+import { BLOGS_PART_123 } from "./data/blogs_part123";
+import { BLOGS_PART_124 } from "./data/blogs_part124";
+import { BLOGS_PART_125 } from "./data/blogs_part125";
+import { BLOGS_PART_126 } from "./data/blogs_part126";
+import { BLOGS_PART_127 } from "./data/blogs_part127";
+import { BLOGS_PART_128 } from "./data/blogs_part128";
+import { BLOGS_PART_129 } from "./data/blogs_part129";
+import { BLOGS_PART_130 } from "./data/blogs_part130";
+import { BLOGS_PART_131 } from "./data/blogs_part131";
+import { BLOGS_PART_132 } from "./data/blogs_part132";
+import { BLOGS_PART_133 } from "./data/blogs_part133";
+import { BLOGS_PART_134 } from "./data/blogs_part134";
+import { BLOGS_PART_135 } from "./data/blogs_part135";
+import { BLOGS_PART_136 } from "./data/blogs_part136";
+import { BLOGS_PART_137 } from "./data/blogs_part137";
+import { BLOGS_PART_138 } from "./data/blogs_part138";
+import { BLOGS_PART_139 } from "./data/blogs_part139";
+import { BLOGS_PART_140 } from "./data/blogs_part140";
+import { BLOGS_PART_141 } from "./data/blogs_part141";
+import { BLOGS_PART_142 } from "./data/blogs_part142";
+import { BLOGS_PART_143 } from "./data/blogs_part143";
+import { BLOGS_PART_144 } from "./data/blogs_part144";
+import { BLOGS_PART_145 } from "./data/blogs_part145";
+import { BLOGS_PART_146 } from "./data/blogs_part146";
+import { BLOGS_PART_147 } from "./data/blogs_part147";
+import { BLOGS_PART_148 } from "./data/blogs_part148";
+import { BLOGS_PART_149 } from "./data/blogs_part149";
+import { BLOGS_PART_150 } from "./data/blogs_part150";
+import { BLOGS_PART_151 } from "./data/blogs_part151";
+import { BLOGS_PART_152 } from "./data/blogs_part152";
+import { BLOGS_PART_153 } from "./data/blogs_part153";
+import { BLOGS_PART_154 } from "./data/blogs_part154";
+import { BLOGS_PART_155 } from "./data/blogs_part155";
+import { BLOGS_PART_156 } from "./data/blogs_part156";
+import { BLOGS_PART_157 } from "./data/blogs_part157";
+import { BLOGS_PART_158 } from "./data/blogs_part158";
+import { BLOGS_PART_159 } from "./data/blogs_part159";
+import { BLOGS_PART_160 } from "./data/blogs_part160";
+import { BLOGS_PART_161 } from "./data/blogs_part161";
+import { BLOGS_PART_162 } from "./data/blogs_part162";
+import { BLOGS_PART_163 } from "./data/blogs_part163";
+import { BLOGS_PART_164 } from "./data/blogs_part164";
+import { BLOGS_PART_165 } from "./data/blogs_part165";
+import { BLOGS_PART_166 } from "./data/blogs_part166";
+import { BLOGS_PART_167 } from "./data/blogs_part167";
+import { BLOGS_PART_168 } from "./data/blogs_part168";
+import { BLOGS_PART_169 } from "./data/blogs_part169";
+import { BLOGS_PART_170 } from "./data/blogs_part170";
+import { BLOGS_PART_171 } from "./data/blogs_part171";
+
+
+import { BLOGS_PART_172 } from "./data/blogs_part172";
+import { BLOGS_PART_173 } from "./data/blogs_part173";
+import { BLOGS_PART_174 } from "./data/blogs_part174";
+import { BLOGS_PART_175 } from "./data/blogs_part175";
+import { BLOGS_PART_176 } from "./data/blogs_part176";
+import { BLOGS_PART_177 } from "./data/blogs_part177";
+import { BLOGS_PART_178 } from "./data/blogs_part178";
+import { BLOGS_PART_179 } from "./data/blogs_part179";
+import { BLOGS_PART_180 } from "./data/blogs_part180";
+import { BLOGS_PART_181 } from "./data/blogs_part181";
+import { BLOGS_PART_182 } from "./data/blogs_part182";
+import { BLOGS_PART_183 } from "./data/blogs_part183";
+import { BLOGS_PART_184 } from "./data/blogs_part184";
+import { BLOGS_PART_185 } from "./data/blogs_part185";
+import { BLOGS_PART_186 } from "./data/blogs_part186";
+import { BLOGS_PART_187 } from "./data/blogs_part187";
+import { BLOGS_PART_188 } from "./data/blogs_part188";
+import { BLOGS_PART_189 } from "./data/blogs_part189";
+import { BLOGS_PART_190 } from "./data/blogs_part190";
+import { BLOGS_PART_191 } from "./data/blogs_part191";
+import { BLOGS_PART_192 } from "./data/blogs_part192";
+import { BLOGS_PART_193 } from "./data/blogs_part193";
+import { BLOGS_PART_194 } from "./data/blogs_part194";
+import { BLOGS_PART_195 } from "./data/blogs_part195";
+import { BLOGS_PART_196 } from "./data/blogs_part196";
+import { BLOGS_PART_197 } from "./data/blogs_part197";
+import { BLOGS_PART_198 } from "./data/blogs_part198";
+import { BLOGS_PART_199 } from "./data/blogs_part199";
+import { BLOGS_PART_200 } from "./data/blogs_part200";
+import { BLOGS_PART_201 } from "./data/blogs_part201";
+import { BLOGS_PART_202 } from "./data/blogs_part202";
+import { BLOGS_PART_203 } from "./data/blogs_part203";
+import { BLOGS_PART_204 } from "./data/blogs_part204";
+import { BLOGS_PART_205 } from "./data/blogs_part205";
+import { BLOGS_PART_206 } from "./data/blogs_part206";
+import { BLOGS_PART_207 } from "./data/blogs_part207";
+import { BLOGS_PART_208 } from "./data/blogs_part208";
+import { BLOGS_PART_209 } from "./data/blogs_part209";
+import { BLOGS_PART_210 } from "./data/blogs_part210";
+import { BLOGS_PART_211 } from "./data/blogs_part211";
+import { BLOGS_PART_212 } from "./data/blogs_part212";
+import { BLOGS_PART_213 } from "./data/blogs_part213";
+import { BLOGS_PART_214 } from "./data/blogs_part214";
+import { BLOGS_PART_215 } from "./data/blogs_part215";
+import { BLOGS_PART_216 } from "./data/blogs_part216";
+import { BLOGS_PART_217 } from "./data/blogs_part217";
+import { BLOGS_PART_218 } from "./data/blogs_part218";
+import { BLOGS_PART_219 } from "./data/blogs_part219";
+import { BLOGS_PART_220 } from "./data/blogs_part220";
+import { BLOGS_PART_221 } from "./data/blogs_part221";
+import { BLOGS_PART_222 } from "./data/blogs_part222";
+import { BLOGS_PART_223 } from "./data/blogs_part223";
+import { BLOGS_PART_224 } from "./data/blogs_part224";
+import { BLOGS_PART_225 } from "./data/blogs_part225";
+import { BLOGS_PART_226 } from "./data/blogs_part226";
+import { BLOGS_PART_227 } from "./data/blogs_part227";
+import { BLOGS_PART_228 } from "./data/blogs_part228";
+import { BLOGS_PART_229 } from "./data/blogs_part229";
+import { BLOGS_PART_230 } from "./data/blogs_part230";
+import { BLOGS_PART_231 } from "./data/blogs_part231";
+import { BLOGS_PART_232 } from "./data/blogs_part232";
+import { BLOGS_PART_233 } from "./data/blogs_part233";
+import { BLOGS_PART_234 } from "./data/blogs_part234";
+import { BLOGS_PART_235 } from "./data/blogs_part235";
+import { BLOGS_PART_236 } from "./data/blogs_part236";
+import { BLOGS_PART_237 } from "./data/blogs_part237";
+import { BLOGS_PART_238 } from "./data/blogs_part238";
+import { BLOGS_PART_239 } from "./data/blogs_part239";
+import { BLOGS_PART_240 } from "./data/blogs_part240";
+import { BLOGS_PART_241 } from "./data/blogs_part241";
+import { BLOGS_PART_242 } from "./data/blogs_part242";
+import { BLOGS_PART_243 } from "./data/blogs_part243";
+import { BLOGS_PART_244 } from "./data/blogs_part244";
+import { BLOGS_PART_245 } from "./data/blogs_part245";
+import { BLOGS_PART_246 } from "./data/blogs_part246";
+import { BLOGS_PART_247 } from "./data/blogs_part247";
+import { BLOGS_PART_248 } from "./data/blogs_part248";
+import { BLOGS_PART_249 } from "./data/blogs_part249";
+import { BLOGS_PART_250 } from "./data/blogs_part250";
+import { BLOGS_PART_251 } from "./data/blogs_part251";
+import { BLOGS_PART_252 } from "./data/blogs_part252";
+import { BLOGS_PART_253 } from "./data/blogs_part253";
+import { BLOGS_PART_254 } from "./data/blogs_part254";
+import { BLOGS_PART_255 } from "./data/blogs_part255";
+import { BLOGS_PART_256 } from "./data/blogs_part256";
+import { BLOGS_PART_257 } from "./data/blogs_part257";
+import { BLOGS_PART_258 } from "./data/blogs_part258";
+import { BLOGS_PART_259 } from "./data/blogs_part259";
+import { BLOGS_PART_260 } from "./data/blogs_part260";
+import { BLOGS_PART_261 } from "./data/blogs_part261";
+import { BLOGS_PART_262 } from "./data/blogs_part262";
+import { BLOGS_PART_263 } from "./data/blogs_part263";
+import { BLOGS_PART_264 } from "./data/blogs_part264";
+import { BLOGS_PART_265 } from "./data/blogs_part265";
+import { BLOGS_PART_266 } from "./data/blogs_part266";
+import { BLOGS_PART_267 } from "./data/blogs_part267";
+import { BLOGS_PART_268 } from "./data/blogs_part268";
+import { BLOGS_PART_269 } from "./data/blogs_part269";
+import { BLOGS_PART_270 } from "./data/blogs_part270";
+import { BLOGS_PART_271 } from "./data/blogs_part271";
+import { BLOGS_PART_272 } from "./data/blogs_part272";
+import { BLOGS_PART_273 } from "./data/blogs_part273";
+import { BLOGS_PART_274 } from "./data/blogs_part274";
+import { BLOGS_PART_275 } from "./data/blogs_part275";
+import { BLOGS_PART_276 } from "./data/blogs_part276";
+import { BLOGS_PART_277 } from "./data/blogs_part277";
+import { BLOGS_PART_278 } from "./data/blogs_part278";
+import { BLOGS_PART_279 } from "./data/blogs_part279";
+import { BLOGS_PART_280 } from "./data/blogs_part280";
+import { BLOGS_PART_281 } from "./data/blogs_part281";
+import { BLOGS_PART_282 } from "./data/blogs_part282";
+import { BLOGS_PART_283 } from "./data/blogs_part283";
+import { BLOGS_PART_284 } from "./data/blogs_part284";
+import { BLOGS_PART_285 } from "./data/blogs_part285";
+import { BLOGS_PART_286 } from "./data/blogs_part286";
+import { BLOGS_PART_287 } from "./data/blogs_part287";
+import { BLOGS_PART_288 } from "./data/blogs_part288";
+import { BLOGS_PART_289 } from "./data/blogs_part289";
+import { BLOGS_PART_290 } from "./data/blogs_part290";
+import { BLOGS_PART_291 } from "./data/blogs_part291";
+import { BLOGS_PART_292 } from "./data/blogs_part292";
+import { BLOGS_PART_293 } from "./data/blogs_part293";
+import { BLOGS_PART_294 } from "./data/blogs_part294";
+import { BLOGS_PART_295 } from "./data/blogs_part295";
+import { BLOGS_PART_296 } from "./data/blogs_part296";
+import { BLOGS_PART_297 } from "./data/blogs_part297";
+
+
+export const allBlogs: BlogPost[] = [
+    ...BLOGS_PART_1,
+    ...BLOGS_PART_2,
+    ...BLOGS_PART_3,
+    ...BLOGS_PART_4,
+    ...BLOGS_PART_5,
+    ...BLOGS_PART_6,
+    ...BLOGS_PART_7,
+    ...BLOGS_PART_8,
+    ...BLOGS_PART_9,
+    ...BLOGS_PART_10,
+    ...BLOGS_PART_11,
+    ...BLOGS_PART_12,
+    ...BLOGS_PART_13,
+    ...BLOGS_PART_14,
+    ...BLOGS_PART_15,
+    ...BLOGS_PART_16,
+    ...BLOGS_PART_17,
+    ...BLOGS_PART_18,
+    ...BLOGS_PART_19,
+    ...BLOGS_PART_20,
+    ...BLOGS_PART_21,
+    ...BLOGS_PART_22,
+    ...BLOGS_PART_23,
+    ...BLOGS_PART_24,
+    ...BLOGS_PART_25,
+    ...BLOGS_PART_26,
+    ...BLOGS_PART_27,
+    ...BLOGS_PART_28,
+    ...BLOGS_PART_29,
+    ...BLOGS_PART_30,
+    ...BLOGS_PART_31,
+    ...BLOGS_PART_32,
+    ...BLOGS_PART_33,
+    ...BLOGS_PART_34,
+    ...BLOGS_PART_35,
+    ...BLOGS_PART_36,
+    ...BLOGS_PART_37,
+    ...BLOGS_PART_38,
+    ...BLOGS_PART_39,
+    ...BLOGS_PART_40,
+    ...BLOGS_PART_41,
+    ...BLOGS_PART_42,
+    ...BLOGS_PART_43,
+    ...BLOGS_PART_44,
+    ...BLOGS_PART_45,
+    ...BLOGS_PART_46,
+    ...BLOGS_PART_47,
+    ...BLOGS_PART_48,
+    ...BLOGS_PART_49,
+    ...BLOGS_PART_50,
+    ...BLOGS_PART_51,
+    ...BLOGS_PART_52,
+    ...BLOGS_PART_53,
+    ...BLOGS_PART_54,
+    ...BLOGS_PART_55,
+    ...BLOGS_PART_56,
+    ...BLOGS_PART_57,
+    ...BLOGS_PART_58,
+    ...BLOGS_PART_59,
+    ...BLOGS_PART_60,
+    ...BLOGS_PART_61,
+    ...BLOGS_PART_62,
+    ...BLOGS_PART_63,
+    ...BLOGS_PART_64,
+    ...BLOGS_PART_65,
+    ...BLOGS_PART_66,
+    ...BLOGS_PART_67,
+    ...BLOGS_PART_68,
+    ...BLOGS_PART_69,
+    ...BLOGS_PART_70,
+    ...BLOGS_PART_71,
+    ...BLOGS_PART_72,
+    ...BLOGS_PART_73,
+    ...BLOGS_PART_74,
+    ...BLOGS_PART_75,
+    ...BLOGS_PART_76,
+    ...BLOGS_PART_77,
+    ...BLOGS_PART_78,
+    ...BLOGS_PART_79,
+    ...BLOGS_PART_80,
+    ...BLOGS_PART_81,
+    ...BLOGS_PART_82,
+    ...BLOGS_PART_83,
+    ...BLOGS_PART_84,
+    ...BLOGS_PART_85,
+    ...BLOGS_PART_86,
+    ...BLOGS_PART_87,
+    ...BLOGS_PART_88,
+    ...BLOGS_PART_89,
+    ...BLOGS_PART_90,
+    ...BLOGS_PART_91,
+    ...BLOGS_PART_92,
+    ...BLOGS_PART_93,
+    ...BLOGS_PART_94,
+    ...BLOGS_PART_95,
+    ...BLOGS_PART_96,
+    ...BLOGS_PART_97,
+    ...BLOGS_PART_98,
+    ...BLOGS_PART_99,
+    ...BLOGS_PART_100,
+    ...BLOGS_PART_101,
+    ...BLOGS_PART_102,
+    ...BLOGS_PART_103,
+    ...BLOGS_PART_104,
+    ...BLOGS_PART_105,
+    ...BLOGS_PART_106,
+    ...BLOGS_PART_107,
+    ...BLOGS_PART_108,
+    ...BLOGS_PART_109,
+    ...BLOGS_PART_110,
+    ...BLOGS_PART_111,
+    ...BLOGS_PART_112,
+    ...BLOGS_PART_113,
+    ...BLOGS_PART_114,
+    ...BLOGS_PART_115,
+    ...BLOGS_PART_116,
+    ...BLOGS_PART_117,
+    ...BLOGS_PART_118,
+    ...BLOGS_PART_119,
+    ...BLOGS_PART_120,
+    ...BLOGS_PART_121,
+    ...BLOGS_PART_122,
+    ...BLOGS_PART_123,
+    ...BLOGS_PART_124,
+    ...BLOGS_PART_125,
+    ...BLOGS_PART_126,
+    ...BLOGS_PART_127,
+    ...BLOGS_PART_128,
+    ...BLOGS_PART_129,
+    ...BLOGS_PART_130,
+    ...BLOGS_PART_131,
+    ...BLOGS_PART_132,
+    ...BLOGS_PART_133,
+    ...BLOGS_PART_134,
+    ...BLOGS_PART_135,
+    ...BLOGS_PART_136,
+    ...BLOGS_PART_137,
+    ...BLOGS_PART_138,
+    ...BLOGS_PART_139,
+    ...BLOGS_PART_140,
+    ...BLOGS_PART_141,
+    ...BLOGS_PART_142,
+    ...BLOGS_PART_143,
+    ...BLOGS_PART_144,
+    ...BLOGS_PART_145,
+    ...BLOGS_PART_146,
+    ...BLOGS_PART_147,
+    ...BLOGS_PART_148,
+    ...BLOGS_PART_149,
+    ...BLOGS_PART_150,
+    ...BLOGS_PART_151,
+    ...BLOGS_PART_152,
+    ...BLOGS_PART_153,
+    ...BLOGS_PART_154,
+    ...BLOGS_PART_155,
+    ...BLOGS_PART_156,
+    ...BLOGS_PART_157,
+    ...BLOGS_PART_158,
+    ...BLOGS_PART_159,
+    ...BLOGS_PART_160,
+    ...BLOGS_PART_161,
+    ...BLOGS_PART_162,
+    ...BLOGS_PART_163,
+    ...BLOGS_PART_164,
+    ...BLOGS_PART_165,
+    ...BLOGS_PART_166,
+    ...BLOGS_PART_167,
+    ...BLOGS_PART_168,
+    ...BLOGS_PART_169,
+    ...BLOGS_PART_170,
+    ...BLOGS_PART_171,
+    ...BLOGS_PART_172,
+    ...BLOGS_PART_173,
+    ...BLOGS_PART_174,
+    ...BLOGS_PART_175,
+    ...BLOGS_PART_176,
+    ...BLOGS_PART_177,
+    ...BLOGS_PART_178,
+    ...BLOGS_PART_179,
+    ...BLOGS_PART_180,
+    ...BLOGS_PART_181,
+    ...BLOGS_PART_182,
+    ...BLOGS_PART_183,
+    ...BLOGS_PART_184,
+    ...BLOGS_PART_185,
+    ...BLOGS_PART_186,
+    ...BLOGS_PART_187,
+    ...BLOGS_PART_188,
+    ...BLOGS_PART_189,
+    ...BLOGS_PART_190,
+    ...BLOGS_PART_191,
+    ...BLOGS_PART_192,
+    ...BLOGS_PART_193,
+    ...BLOGS_PART_194,
+    ...BLOGS_PART_195,
+    ...BLOGS_PART_196,
+    ...BLOGS_PART_197,
+    ...BLOGS_PART_198,
+    ...BLOGS_PART_199,
+    ...BLOGS_PART_200,
+    ...BLOGS_PART_201,
+    ...BLOGS_PART_202,
+    ...BLOGS_PART_203,
+    ...BLOGS_PART_204,
+    ...BLOGS_PART_205,
+    ...BLOGS_PART_206,
+    ...BLOGS_PART_207,
+    ...BLOGS_PART_208,
+    ...BLOGS_PART_209,
+    ...BLOGS_PART_210,
+    ...BLOGS_PART_211,
+    ...BLOGS_PART_212,
+    ...BLOGS_PART_213,
+    ...BLOGS_PART_214,
+    ...BLOGS_PART_215,
+    ...BLOGS_PART_216,
+    ...BLOGS_PART_217,
+    ...BLOGS_PART_218,
+    ...BLOGS_PART_219,
+    ...BLOGS_PART_220,
+    ...BLOGS_PART_221,
+    ...BLOGS_PART_222,
+    ...BLOGS_PART_223,
+    ...BLOGS_PART_224,
+    ...BLOGS_PART_225,
+    ...BLOGS_PART_226,
+    ...BLOGS_PART_227,
+    ...BLOGS_PART_228,
+    ...BLOGS_PART_229,
+    ...BLOGS_PART_230,
+    ...BLOGS_PART_231,
+    ...BLOGS_PART_232,
+    ...BLOGS_PART_233,
+    ...BLOGS_PART_234,
+    ...BLOGS_PART_235,
+    ...BLOGS_PART_236,
+    ...BLOGS_PART_237,
+    ...BLOGS_PART_238,
+    ...BLOGS_PART_239,
+    ...BLOGS_PART_240,
+    ...BLOGS_PART_241,
+    ...BLOGS_PART_242,
+    ...BLOGS_PART_243,
+    ...BLOGS_PART_244,
+    ...BLOGS_PART_245,
+    ...BLOGS_PART_246,
+    ...BLOGS_PART_247,
+    ...BLOGS_PART_248,
+    ...BLOGS_PART_249,
+    ...BLOGS_PART_250,
+    ...BLOGS_PART_251,
+    ...BLOGS_PART_252,
+    ...BLOGS_PART_253,
+    ...BLOGS_PART_254,
+    ...BLOGS_PART_255,
+    ...BLOGS_PART_256,
+    ...BLOGS_PART_257,
+    ...BLOGS_PART_258,
+    ...BLOGS_PART_259,
+    ...BLOGS_PART_260,
+    ...BLOGS_PART_261,
+    ...BLOGS_PART_262,
+    ...BLOGS_PART_263,
+    ...BLOGS_PART_264,
+    ...BLOGS_PART_265,
+    ...BLOGS_PART_266,
+    ...BLOGS_PART_267,
+    ...BLOGS_PART_268,
+    ...BLOGS_PART_269,
+    ...BLOGS_PART_270,
+    ...BLOGS_PART_271,
+    ...BLOGS_PART_272,
+    ...BLOGS_PART_273,
+    ...BLOGS_PART_274,
+    ...BLOGS_PART_275,
+    ...BLOGS_PART_276,
+    ...BLOGS_PART_277,
+    ...BLOGS_PART_278,
+    ...BLOGS_PART_279,
+    ...BLOGS_PART_280,
+    ...BLOGS_PART_281,
+    ...BLOGS_PART_282,
+    ...BLOGS_PART_283,
+    ...BLOGS_PART_284,
+    ...BLOGS_PART_285,
+    ...BLOGS_PART_286,
+    ...BLOGS_PART_287,
+    ...BLOGS_PART_288,
+    ...BLOGS_PART_289,
+    ...BLOGS_PART_290,
+    ...BLOGS_PART_291,
+    ...BLOGS_PART_292,
+    ...BLOGS_PART_293,
+    ...BLOGS_PART_294,
+    ...BLOGS_PART_295,
+    ...BLOGS_PART_296,
+    ...BLOGS_PART_297,
 ];

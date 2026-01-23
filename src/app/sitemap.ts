@@ -1,10 +1,10 @@
 import { MetadataRoute } from "next";
-import { INITIAL_BLOGS } from "@/lib/blogs";
+import { allBlogs } from "@/lib/blogs";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://clarifyit.in";
 
-    const posts = INITIAL_BLOGS.map((blog) => ({
+    const posts = allBlogs.map((blog) => ({
         url: `${baseUrl}/blog/${blog.slug}`,
         lastModified: new Date(blog.publishedAt),
         changeFrequency: "monthly" as const,

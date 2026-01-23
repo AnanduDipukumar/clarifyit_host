@@ -3,7 +3,7 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { parseShareData, createNewPlaylist, Playlist } from "@/lib/playlists";
-import { INITIAL_BLOGS } from "@/lib/blogs";
+import { allBlogs } from "@/lib/blogs";
 import BlogCard from "@/components/BlogCard";
 import { Copy, ArrowLeft, DownloadCloud } from "lucide-react";
 
@@ -33,7 +33,7 @@ function SharedPlaylistContent() {
     }
 
     const blogs = (playlist.blogSlugs || [])
-        .map(slug => INITIAL_BLOGS.find(b => b.slug === slug))
+        .map(slug => allBlogs.find(b => b.slug === slug))
         .filter(b => b !== undefined);
 
     const handleSaveCopy = () => {

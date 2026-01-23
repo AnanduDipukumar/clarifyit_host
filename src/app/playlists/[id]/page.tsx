@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, notFound, useRouter } from "next/navigation";
 import { getPlaylist, savePlaylist, toggleBlogInPlaylist, generateShareUrl, Playlist } from "@/lib/playlists";
-import { INITIAL_BLOGS } from "@/lib/blogs";
+import { allBlogs } from "@/lib/blogs";
 import BlogCard from "@/components/BlogCard";
 import { ArrowLeft, Share2, Trash2, Edit2, Link as LinkIcon, Check } from "lucide-react";
 
@@ -35,7 +35,7 @@ export default function PlaylistDetailsPage() {
 
     // Resolve blogs
     const playlistBlogs = playlist.blogSlugs
-        .map(slug => INITIAL_BLOGS.find(b => b.slug === slug))
+        .map(slug => allBlogs.find(b => b.slug === slug))
         .filter(b => b !== undefined);
 
     const handleSave = () => {

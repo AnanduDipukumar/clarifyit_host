@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import SearchSection from "@/components/SearchSection";
 import BlogCard from "@/components/BlogCard";
 import OnboardingGuide from "@/components/OnboardingGuide";
-import { INITIAL_BLOGS } from "@/lib/blogs";
+import { allBlogs } from "@/lib/blogs";
 import { filterBlogs, MatchLogic, MatchType } from "@/lib/filter";
 
 export default function Home() {
@@ -42,14 +42,14 @@ export default function Home() {
   // Extract all unique tags
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
-    INITIAL_BLOGS.forEach(blog => {
+    allBlogs.forEach(blog => {
       blog.tags?.forEach(tag => tags.add(tag));
     });
     return Array.from(tags).sort();
   }, []);
 
   const filteredBlogs = useMemo(() => {
-    return filterBlogs(INITIAL_BLOGS, searchTerm, selectedTags, sortOption, matchLogic, matchType);
+    return filterBlogs(allBlogs, searchTerm, selectedTags, sortOption, matchLogic, matchType);
   }, [searchTerm, sortOption, selectedTags, matchLogic, matchType]);
 
   // Construct Query String for Navigation Context

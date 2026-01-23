@@ -1,4 +1,4 @@
-import { INITIAL_BLOGS } from "@/lib/blogs";
+import { allBlogs } from "@/lib/blogs";
 import { notFound } from "next/navigation";
 import BlogPostClient from "@/components/BlogPostClient";
 import type { Metadata } from "next";
@@ -11,7 +11,7 @@ type Props = {
 // Generate dynamic metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
-    const blog = INITIAL_BLOGS.find((b) => b.slug === slug);
+    const blog = allBlogs.find((b) => b.slug === slug);
 
     if (!blog) {
         return {
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
     const { slug } = await params;
-    const blog = INITIAL_BLOGS.find((b) => b.slug === slug);
+    const blog = allBlogs.find((b) => b.slug === slug);
 
     if (!blog) {
         notFound();
@@ -48,7 +48,7 @@ export default async function BlogPostPage({ params }: Props) {
 
 // Generate static params for all blogs at build time
 export async function generateStaticParams() {
-    return INITIAL_BLOGS.map((blog) => ({
+    return allBlogs.map((blog) => ({
         slug: blog.slug,
     }));
 }

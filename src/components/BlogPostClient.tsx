@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { BlogPost, INITIAL_BLOGS } from "@/lib/blogs";
+import { BlogPost, allBlogs } from "@/lib/blogs";
 import { filterBlogs, MatchLogic, MatchType } from "@/lib/filter";
 import { useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -11,6 +11,7 @@ import rehypeKatex from "rehype-katex";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Clock, Eye, Share2, Heart, Bookmark } from "lucide-react";
 import LikeButton from "@/components/LikeButton";
+import FeedbackSection from "@/components/FeedbackSection";
 import QASection from "@/components/QASection";
 import { incrementView, getBlogStats } from "@/lib/db";
 import { addToHistory } from "@/lib/history";
@@ -31,7 +32,7 @@ export default function BlogPostClient({ blog }: { blog: BlogPost }) {
         const matchType = (searchParams.get("match") || "exact") as MatchType;
 
         // Re-run filter logic
-        const filteredList = filterBlogs(INITIAL_BLOGS, searchTerm, tags, sortOption, matchLogic, matchType);
+        const filteredList = filterBlogs(allBlogs, searchTerm, tags, sortOption, matchLogic, matchType);
 
         const currentIndex = filteredList.findIndex(b => b.slug === blog.slug);
         const prev = currentIndex > 0 ? filteredList[currentIndex - 1] : null;
@@ -43,6 +44,12 @@ export default function BlogPostClient({ blog }: { blog: BlogPost }) {
             contextParams: searchParams.toString() ? `?${searchParams.toString()}` : ""
         };
     }, [blog.slug, searchParams]);
+
+    const [formattedDate, setFormattedDate] = useState<string>("");
+
+    useEffect(() => {
+        setFormattedDate(new Date(blog.publishedAt).toLocaleDateString());
+    }, [blog.publishedAt]);
 
     useEffect(() => {
         incrementView(blog.slug);
@@ -94,7 +101,7 @@ export default function BlogPostClient({ blog }: { blog: BlogPost }) {
                         </span>
                         <span className="text-xs text-muted-foreground flex items-center gap-1">
                             <Clock className="h-3 w-3" />
-                            {new Date(blog.publishedAt).toLocaleDateString()}
+                            {formattedDate}
                         </span>
                         <span className="text-xs text-muted-foreground flex items-center gap-1">
                             <Eye className="h-3 w-3" />
@@ -174,6 +181,9 @@ export default function BlogPostClient({ blog }: { blog: BlogPost }) {
                 </div>
                 <LikeButton slug={blog.slug} />
             </div>
+
+            {/* Feedback */}
+            <FeedbackSection slug={blog.slug} />
 
             {/* Q&A */}
             <QASection slug={blog.slug} />
