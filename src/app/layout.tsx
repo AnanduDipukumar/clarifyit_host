@@ -11,7 +11,10 @@ export const metadata: Metadata = {
   title: "ClarifyIt - Explained Simply",
   description: "Beginner-friendly explanations for scientific and technical topics.",
   icons: {
-    icon: "/logo.png",
+    icon: [
+      { url: "/logo.png", sizes: "any" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
