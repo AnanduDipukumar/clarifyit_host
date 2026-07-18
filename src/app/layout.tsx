@@ -4,6 +4,7 @@ import "./globals.css";
 import LayoutShell from "@/components/LayoutShell";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
           <LayoutShell>{children}</LayoutShell>
         </ThemeProvider>
         <GoogleAnalytics gaId="G-CCDJ39B59D" />
+        <Analytics />
       </body>
     </html>
   );
