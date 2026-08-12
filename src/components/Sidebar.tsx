@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Home, BookOpen, Info, Mail, Heart, PenTool, ListMusic } from "lucide-react";
+import { X, Home, BookOpen, Info, Mail, Heart, PenTool, ListMusic, Smartphone } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -75,6 +75,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                         {/* Using a different icon for differentiation */}
                         <ListMusic className="h-4 w-4" />
                         Custom Courses
+                    </Link>
+                    <Link
+                        href="/apps"
+                        className="flex items-center gap-2 p-2 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-sm font-medium text-indigo-600 dark:text-indigo-400"
+                        onClick={onClose}
+                    >
+                        <Smartphone className="h-4 w-4" />
+                        Apps Hub
                     </Link>
                     <Link
                         href="/about"
